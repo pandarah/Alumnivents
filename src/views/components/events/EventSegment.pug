@@ -1,4 +1,4 @@
-div(class='ui segment')
+div(class='ui segment event' id=`event-${event.id}`)
     div(class='ui two column stackable grid')
         div(class='ui thirteen wide column')
             h4= event.name
@@ -7,4 +7,5 @@ div(class='ui segment')
             p.
                 #[span(class='descriptor') Date]: #{moment(event.date).format('dddd, MMMM Do YYYY [at] h:mm a')}
         div(class='ui three wide middle aligned column')
-            button(class='ui button fluid orange') View
+            button(class='ui button fluid orange' id=`event-button-${event.id}`) View
+            include ../modals/Details

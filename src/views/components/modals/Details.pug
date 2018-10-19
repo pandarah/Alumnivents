@@ -1,0 +1,12 @@
+div(class='ui modal details' id=`event-detail-${event.id}`)
+    div(class='header')= event.name
+        if loggedIn
+            div(class='ui button right floated confirm' id=`event-print-${event.id}`) Print Report
+    div(class='content')
+        include ../events/EventDetails
+    div(class='actions')
+        if loggedIn
+            div(class='ui button confirm' id=`event-checkin-${event.id}`) Print Report
+        else
+            div(class='ui button confirm' id=`event-feedback-${event.id}`) Provide Feedback
+            div(class='ui button confirm' id=`event-checkin-${event.id}`) Check In

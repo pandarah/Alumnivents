@@ -1,28 +1,28 @@
 [
-	{
-		"event_name": "Grand Reunion",
-		"event_type": "Gathering",
-		"date": 201810121900,
-		"duration": 3,
-		"attendees": [
-			{
-				"name": "Bob",
-				"grad_year": 2013,
-				"major": "Mechanical Engineer"
-			},
-			{
-	                        "name": "Alice",
-	                        "grad_year": 2008,
-	                        "major": "Child Studies"
-	                },
-			{
-	                        "name": "Rick",
-	                        "grad_year": 1988,
-	                        "major": "Theater"
-	                }
-		]	
-	},
-	{
+        {
+                "event_name": "Grand Reunion",
+                "event_type": "Gathering",
+                "date": 201810121900,
+                "duration": 3,
+                "attendees": [
+                        {
+                                "name": "Bob",
+                                "grad_year": 2013,
+                                "major": "Mechanical Engineer"
+                        },
+                        {
+                                "name": "Alice",
+                                "grad_year": 2008,
+                                "major": "Child Studies"
+                        },
+                        {
+                                "name": "Rick",
+                                "grad_year": 1988,
+                                "major": "Theater"
+                        }
+                ]
+        },
+        {
                 "event_name": "Basketball",
                 "event_type": "Sports",
                 "date": 201606202000,
@@ -45,7 +45,7 @@
                         }
                 ]
         },
-	{
+        {
                 "event_name": "Random",
                 "event_type": "IDK",
                 "date": 200702181600,

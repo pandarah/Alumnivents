@@ -1,6 +1,10 @@
 $(document).ready(function() {
     $('.ui.accordion').accordion();
     $('.ui.modal').modal();
+    $('.ui.rating').rating({
+        maxRating: 5,
+        interactive: false,
+    })
     $('#login-form').form({
         fields: {
             password: 'empty',

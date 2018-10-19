@@ -1,0 +1,63 @@
+div(class='ui text container')
+    div(class='ui list')
+        div(class='item')
+            div(class='header') Description
+            .
+                #{event.description}
+        div(class='item')
+            div(class='header') Location
+            .
+                #{event.location}
+        div(class='item')
+            div(class='header') Date
+            .
+                #{moment(event.date).format('dddd, MMMM Do YYYY')}
+        div(class='item')
+            div(class='header') Time
+            .
+                #{moment(event.date).format('hh:mm a')} to #{moment(event.endTime).format('hh:mm a')}
+        div(class='item')
+            div(class='header') Host
+            .
+                #{event.host}
+        div(class='item')
+            div(class='header') Category
+            .
+                #{event.category}
+        div(class='item')
+            div(class='header') Number of Attendees
+            .
+                #{event.attendees.length}
+
+        if loggedIn
+            div(class='item')
+                div(class='header') Attendees
+                table(class='ui celled table')
+                    thead
+                        tr
+                            th Name
+                            th Major
+                            th Grad. Year
+                    tbody
+                        each attendee, idx in event.attendees
+                            tr
+                                td(data-label='Name')= attendee.name
+                                td(data-label='Major')= attendee.major
+                                td(data-label='Graduation Year')= attendee.gradYear
+            div(class='item')
+                div(class='header') Feedback
+                table(class='ui celled table')
+                    thead
+                        tr
+                            th Name
+                            th Rating
+                            th Comment
+                    tbody
+                        each comment, idx in event.comments
+                            tr
+                                td(data-label='Name')= comment.name
+                                td(data-label='Rating')
+                                    div(class='ui star rating' data-rating=`${comment.rating}`) 
+                                td(data-label='Comment')= comment.detail
+
+                
