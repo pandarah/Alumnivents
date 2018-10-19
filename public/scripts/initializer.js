@@ -1,10 +1,15 @@
 $(document).ready(function() {
     $('.ui.accordion').accordion();
-    $('.ui.modal').modal();
+    $('.ui.modal').modal({
+        allowMultiple: false,
+    });
     $('.ui.rating').rating({
         maxRating: 5,
         interactive: false,
-    })
+    });
+    $('.ui.rating.event-rating').rating({
+        maxRating: 5,
+    });
     $('#login-form').form({
         fields: {
             password: 'empty',
@@ -36,6 +41,6 @@ const eventFields = {
     name: 'empty',
     location: 'empty',
     date: 'empty',
-    duration: 'empty',
+    endTime: 'empty',
     description: 'empty',
 }

@@ -1,0 +1,14 @@
+form(class='ui form' id='login-form')
+    div(class='field')
+        label Name
+        div(class='two fields')
+            div(class='field')
+                input(type='text' name='firstname' placeholder='First Name')
+            div(class='field')
+                input(type='text' name='lastname' placeholder='Last Name')
+    div(class='field')
+        label Event Rating
+        div(class='ui huge star rating event-rating' id=`event-rating-${event.id}`)
+    div(class='field')
+        label Comment
+        textarea(rows='4')
