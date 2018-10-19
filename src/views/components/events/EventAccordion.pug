@@ -1,0 +1,31 @@
+div(class='ui styled fluid accordion')
+    div(class='title'.concat(loggedIn ? '' : ' active'))
+        i(class='dropdown icon')
+        .
+            Upcoming Events
+    div(class='content'.concat(loggedIn ? '' : ' active'))
+        div(class='ui segments')
+            each event in events.upcoming
+                include EventSegment
+                
+
+div(class='ui styled fluid accordion')
+    div(class='title')
+        i(class='dropdown icon')
+        .
+            Past Events
+    div(class='content')
+        div(class='ui raised segments')
+            each event in events.past
+                include EventSegment
+
+if loggedIn
+    div(class='ui styled fluid accordion')
+        div(class='title active')
+            i(class='dropdown icon')
+            .
+                Pending Events
+        div(class='content active')
+            div(class='ui raised segments')
+                each event in events.pending
+                    include EventSegment

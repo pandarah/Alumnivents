@@ -1,0 +1,33 @@
+form(class='ui form' id='login-form')
+    h4(class='ui dividing header') Your Information
+    div(class='field')
+        label Name
+        div(class='two fields')
+            div(class='field')
+                input(type='text' name='firstname' placeholder='First Name')
+            div(class='field')
+                input(type='text' name='lastname' placeholder='Last Name')
+    div(class='two fields')
+        div(class='field')
+            label Graduation Year
+            input(type='text' name='gradyear' placeholder='Graduation Year')
+        div(class='field')
+            label Major
+            input(type='text' name='major' placeholder='Major')
+    h4(class='ui dividing header') Event Information
+    div(class='field')
+        label Event Name
+        input(type='text' name='name' placeholder='Event Name')
+    div(class='three fields')
+            div(class='field')
+                label Location
+                input(type='text' name='location' placeholder='Location')
+            div(class='field')
+                label Time and Date
+                input(type='text' name='date' placeholder='Time and Date' id='dateTimeSelector')
+            div(class='field')
+                label End Time
+                input(type='text' name='endTime' placeholder='End Time' id='endTimeSelector')
+    div(class='field')
+        label Description
+        textarea(rows='3')

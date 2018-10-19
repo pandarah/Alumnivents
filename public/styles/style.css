@@ -1,0 +1,27 @@
+#heading {
+  background-color: #B30738;
+}
+
+#heading h1 {
+  color: white;
+}
+
+#sidebar {
+    background-color: rgb(145, 5, 44);
+    height: 100vh;
+    margin-top: calc(-2rem - 64px);
+    z-index: -1;
+}
+
+.button.confirm {
+    background-color: #B30738;
+    color: white;
+}
+
+.ui.accordion {
+    margin-bottom: 4%;
+}
+
+.descriptor {
+    text-decoration: underline;
+}
