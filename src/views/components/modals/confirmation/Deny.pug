@@ -1,0 +1,7 @@
+div(class='ui tiny modal' id=`deny-modal-${event.id}`)
+    div(class='header') Deny Event
+    div(class='content') Are you sure your want to deny this event?
+    div(class='actions')
+        div(class='ui button cancel' id=`deny-cancel-${event.id}`) Cancel
+        a(class='ui button right labeled icon confirm' id=`deny-submit-${event.id}` href=`/deny/${event.id}`) Yes
+            i(class='check icon')

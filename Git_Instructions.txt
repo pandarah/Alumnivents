@@ -1,0 +1,46 @@
+// You guys don't need to do this part, this is just in case you wanna make your own project some day
+
+// Read the README.md to get setup on this project
+
+Starting a project:
+1 - Make a new project in Github
+	- Turn readme on
+2 - Copy the project link from the "clone or download" tab
+	- Link for our project: https://github.com/NatColeKing/TrivialPursuit.git
+3 - In GitBash, type the following commands
+	cd */to project directory*/
+	git init
+	   // initializes the local directory as a git repository
+	git add .
+	   // adds files in repository
+	git commit -m "First commit"
+	   // commits the files you added so you can push
+	git remote add origin https://github.com/NatColeKing/TrivialPursuit.git
+	   // sets the new remote
+	git remote -v
+	   // you don't have to do this - this just verifies that the
+	   // last command worked
+	git push origin master
+4 - On Github, you should see all the folders in the project and 
+    "First commit"
+___________________________________________________________________________________
+
+//This is the stuff you'll need
+***Make sure to save changes and close unity completely before pushing/pulling***
+
+Pushing:
+	cd */to file location*/
+		Terry: cd ~/Desktop/aShortFilm/TrivialPursuit
+		Chris: cd ~/Documents/Unity/TrivialPursuit
+	git add .
+	git commit -m "Message of choice - what you changed"
+	git push origin master
+	// if for some reason it doesn't want to push, you can force-push it with:
+	//	git push -f origin master
+
+Pulling:
+	cd */to file location*/
+		Terry: cd ~/Desktop/aShortFilm/TrivialPursuit
+		Chris: cd ~/Documents/Unity/TrivialPursuit
+	git fetch --all
+	git reset --hard origin/master

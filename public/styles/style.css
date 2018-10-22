@@ -1,0 +1,47 @@
+#log {
+    display: none;
+}
+#heading {
+  background-color: #B30738;
+}
+
+#heading h1 {
+  color: white;
+}
+
+#printer {
+    padding: 2em;
+}
+
+.button.confirm {
+    background-color: #B30738;
+    color: white;
+}
+.button.confirm:hover {
+    background-color: #820529;
+    color: white;
+}
+
+.label.confirm {
+    border-color: #B30738 !important;
+    color: white;
+}
+.label.confirm:hover {
+    border-color: #820529 !important;
+    color: white;
+}
+.label.confirm:hover i{
+    color: white;
+}
+
+.ui.accordion {
+    margin-bottom: 4%;
+}
+
+#search-form .search {
+    margin-bottom: 1rem;
+}
+
+#filter-clear {
+    margin-top: 1rem;
+}

@@ -1,0 +1,8 @@
+div(class='ui grid center stackable aligned centered')
+    div(class='four wide column')
+        div(class='ui segment')
+            include ./filters/Filter
+            include ./filters/Search
+            div(class='ui button fluid inverted secondary' id='filter-clear') Clear Filters
+    div(class='eleven wide column')
+        include ./events/EventAccordion

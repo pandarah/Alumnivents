@@ -1,0 +1,17 @@
+div(class='field')
+    label Major
+    div(class='ui fluid search selection dropdown')
+        input(type='hidden' name='major')
+        div(class='dropdown icon')
+        div(class='default text') Major
+        div(class='menu')
+            div(class='item' data-value='Other') Other
+            each val, school in formOptions.majors
+                div(class='header')
+                    i(class=`icon ${val.icon}`)
+                    .
+                        #{school}
+                each major, idx in val.list
+                    div(class='item' data-value=`${major}`)= major
+                if school !== Object.keys(formOptions.majors)[Object.keys(formOptions.majors).length - 1]
+                    div(class='divider')

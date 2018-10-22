@@ -1,0 +1,76 @@
+div(class='ui four column container vertically divided grid')
+    div(class='ui two column row')
+        div(class='ten wide column')
+            div(class='ui header') Description
+                div(class='sub header')= event.description
+        div(class='six wide column')
+            div(class='ui header') Location
+                div(class='sub header')= `${event.location.address}`
+                div(class='sub header')= `${event.location.city.concat(' ', event.location.state, ', ', event.location.zipcode)}`
+                div(class='sub header')= `${event.location.country}`
+            div(class='ui header') Date
+                div(class='sub header')= libraries.moment(event.date).format('dddd, MMMM Do YYYY')
+            div(class='ui header') Time
+                div(class='sub header')= `${libraries.moment(event.date).format('hh:mm a')} to ${libraries.moment(event.endTime).format('hh:mm a')}`
+    div(class='ui four column row')
+        div(class='column')
+            div(class='ui header') Category
+                div(class='sub header')= event.category
+        div(class='column')
+            div(class='ui header') Host
+                div(class='sub header')= event.host.name
+                if loggedIn && event.approved
+                    div(class='sub header')= event.host.major
+                    div(class='sub header')= event.host.graduation
+        if !event.approved
+            div(class='column')
+                div(class='ui header') Major
+                    div(class='sub header')= event.host.major
+            div(class='column')
+                div(class='ui header') Graduation Year
+                    div(class='sub header')= event.host.graduation
+        else if event.date < new Date() && event.approved
+            div(class='column')
+                div(class='ui header') Attendees
+                    div(class='sub header')= event.attendees.length
+            div(class='column')
+                div(class='ui header') Interested
+                    div(class='sub header')= event.interested
+        else if event.approved
+            div(class='eight wide column')
+                div(class='ui header') Interested
+                    div(class='sub header')= event.interested
+        else
+            div(class='eight wide column')
+if loggedIn && event.date < date && event.approved
+    if !printer
+        div(class='ui divider')
+    div(class='ui header') Attendees
+    table(class='ui celled table')
+        thead
+            tr
+                th Name
+                th Major
+                th Grad. Year
+        tbody
+            each attendee, idx in event.attendees
+                tr
+                    td(data-label='Name')= attendee.name
+                    td(data-label='Major')= attendee.major
+                    td(data-label='Graduation Year')= attendee.graduation
+    if !printer
+        div(class='ui divider')
+    div(class='ui header') Feedback
+    table(class='ui celled table')
+        thead
+            tr
+                th Name
+                th Rating
+                th Comment
+        tbody
+            each comment, idx in event.comments
+                tr
+                    td(data-label='Name')= comment.name
+                    td(data-label='Rating')
+                        div(class='ui star rating' data-rating=`${comment.rating}`) 
+                    td(data-label='Comment')= comment.detail

@@ -1,0 +1,7 @@
+div(class='ui modal' id=`feedback-modal-${event.id}`)
+    div(class='header') Submit Feedback About this Event
+    div(class='content')
+        include ../forms/Feedback
+    div(class='actions')
+        div(class='ui button cancel' id=`feedback-cancel-${event.id}`) Cancel
+        div(class='ui button confirm' id=`feedback-submit-${event.id}`) Submit

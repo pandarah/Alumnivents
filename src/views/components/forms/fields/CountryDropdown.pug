@@ -1,0 +1,11 @@
+div(class='five wide field')
+    div(class='ui search selection dropdown')
+        input(type='hidden' name='country')
+        div(class='dropdown icon')
+        div(class='default text') Country
+        div(class='menu')
+            each country, idx in formOptions.countries
+                div(class='item' data-value=`${country}`)
+                    //- i(class=`${country} flag`)
+                    .
+                        #{country}

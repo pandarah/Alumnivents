@@ -1,0 +1,14 @@
+form(class='ui form' id=`checkin-form-${event.id}` method='post' action='/checkin')
+    input(type='hidden' name='event' value=`${event.id}`)
+    div(class='field')
+        label Name
+        div(class='two fields')
+            div(class='field')
+                input(type='text' name='firstname' placeholder='First Name')
+            div(class='field')
+                input(type='text' name='lastname' placeholder='Last Name')
+    div(class='two fields')
+        div(class='field')
+            label Graduation Year
+            input(type='text' name='graduation' placeholder='Graduation Year')
+        include ./fields/MajorDropdown
