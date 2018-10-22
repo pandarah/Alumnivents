@@ -2625,6 +2625,11 @@ once@^1.3.0:
   dependencies:
     wrappy "1"
 
+oracledb@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/oracledb/-/oracledb-3.0.0.tgz#d202e52b7eb7da34f4eec59e4ab142baef93ad6c"
+  integrity sha512-lXC1DEJ9EbFJrD40X8tB8gl6sNnDl+/1X2mwvtOaXYB+5DgabQ3VWEP7TmK+1FqdzxIUbWN7zsX3yozX6YmOeQ==
+
 os-homedir@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/os-homedir/-/os-homedir-1.0.2.tgz#ffbc4988336e0e833de0c168c7ef152121aa7fb3"
