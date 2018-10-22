@@ -1,8 +1,7 @@
 div(class='ui header') Search Events
-form(class='ui form' id='search-form' method='get' action='/filter')
-    div(class='ui fluid search')
+form(class='ui form' id='search-form' method='post' action='/filter')
+    div(class='field')
         div(class='ui icon fluid input')
-            input(class='prompt' type='text' placeholder='Search...')
+            input(class='prompt' type='text' name='search' placeholder='Event Name...')
             i(class='search icon')
-    div(class='ui button fluid confirm labeled icon' id='search-submit') Apply
-        i(class='search icon')        
+    div(class='ui button fluid confirm' id='search-submit') Apply Filter

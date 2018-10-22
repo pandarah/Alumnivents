@@ -33,6 +33,12 @@ $(document).ready(() => {
     $('#create-form').form({
         fields: createFields(loggedIn),
     });
+    $('#create-form').form('clear');
+    $('#search-form').form({
+        fields: {
+            search: 'empty',
+        },
+    });
 
     for (let i = 0; i < eventCount; i++) {
         $(`#checkin-form-${i}`).form({

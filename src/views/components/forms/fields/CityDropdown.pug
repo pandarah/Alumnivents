@@ -1,0 +1,9 @@
+div(class='field')
+    label City
+    div(class='ui search selection dropdown')
+        input(type='hidden' name='city' value=`${filters.hasOwnProperty('city') && filters.city !== '' ? filters.city : null}`)
+        div(class='dropdown icon')
+        div(class='default text') City
+        div(class='menu')
+            each city, idx in formOptions.cities
+                div(class='item' data-value=`${city}`)= city

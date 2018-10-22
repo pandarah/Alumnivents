@@ -4,7 +4,7 @@ div(class='ui styled fluid accordion')
         .
             Upcoming Events
     div(class='content'.concat(loggedIn ? '' : ' active'))
-        div(class='ui segments')
+        div(class='ui segments' id='upcoming-events')
             each event in events.upcoming
                 include EventSegment
                 
@@ -15,7 +15,7 @@ div(class='ui styled fluid accordion')
         .
             Past Events
     div(class='content')
-        div(class='ui raised segments')
+        div(class='ui raised segments' id='past-events')
             each event in events.past
                 include EventSegment
 
@@ -26,6 +26,6 @@ if loggedIn
             .
                 Pending Events
         div(class='content active')
-            div(class='ui raised segments')
+            div(class='ui raised segments' id='pending-events')
                 each event in events.pending
                     include EventSegment

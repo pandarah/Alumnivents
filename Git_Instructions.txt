@@ -1,5 +1,6 @@
-// You guys don't need to do this part, this is just in case you wanna make 
-// your own project some day
+// You guys don't need to do this part, this is just in case you wanna make your own project some day
+
+// Read the README.md to get setup on this project
 
 Starting a project:
 1 - Make a new project in Github

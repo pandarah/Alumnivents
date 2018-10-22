@@ -6,6 +6,8 @@ div(class='ui modal details' id=`event-detail-${event.id}`)
     div(class='content')
         include ../events/EventDetails
     div(class='actions')
+        div(class='ui button labeled icon cancel') Close
+            i(class='close icon')
         if !event.approved
             div(class='ui button labeled icon red' id=`event-deny-${event.id}`) Deny
                 i(class='close icon')

@@ -8,27 +8,32 @@ $(document).ready(() => {
     }
     $('#create-modal').modal('attach events', '#create', 'show')
 
-    for (let i = 0; i < eventCount; i++) {
-        $(`#event-detail-${i}`).modal('attach events', `#event-button-${i}`, 'show');
+    // for (let i = 0; i < eventCount; i++) {
+    $('.event').each(function () {
+        const id = $(this).attr('id').slice(6);
+        $(`#event-detail-${id}`).modal('attach events', `#event-button-${id}`, 'show');
         if (!loggedIn) {
-            $(`#feedback-modal-${i}`).modal('attach events', `#event-feedback-${i}`, 'show')
-            $(`#checkin-modal-${i}`).modal('attach events', `#event-checkin-${i}`, 'show')
-            $(`#event-detail-${i}`).modal('attach events', `#feedback-cancel-${i}`, 'show')
-            $(`#event-detail-${i}`).modal('attach events', `#checkin-cancel-${i}`, 'show')
+            console.log($(this).parent().attr('id') === 'past-events')
+            if ($(this).parent().attr('id') === 'past-events') {
+                $(`#feedback-modal-${id}`).modal('attach events', `#event-feedback-${id}`, 'show')
+                $(`#checkin-modal-${id}`).modal('attach events', `#event-checkin-${id}`, 'show')
+                $(`#event-detail-${id}`).modal('attach events', `#feedback-cancel-${id}`, 'show')
+                $(`#event-detail-${id}`).modal('attach events', `#checkin-cancel-${id}`, 'show')
 
-            $(document).on('click', `#checkin-submit-${i}`, () => {
-                $(`#checkin-form-${i}`).submit();
-            });
-            $(document).on('click', `#feedback-submit-${i}`, () => {
-                $(`#feedback-form-${i}`).submit();
-            });
+                $(document).on('click', `#checkin-submit-${id}`, () => {
+                    $(`#checkin-form-${id}`).submit();
+                });
+                $(document).on('click', `#feedback-submit-${id}`, () => {
+                    $(`#feedback-form-${id}`).submit();
+                });
+            }
         } else {
-            $(`#accept-modal-${i}`).modal('attach events', `#event-accept-${i}`, 'show')
-            $(`#deny-modal-${i}`).modal('attach events', `#event-deny-${i}`, 'show')
-            if ($(`#accept-cancel-${i}`).length) $(`#event-detail-${i}`).modal('attach events', `#accept-cancel-${i}`, 'show')
-            if ($(`#deny-cancel-${i}`).length) $(`#event-detail-${i}`).modal('attach events', `#deny-cancel-${i}`, 'show')
+            $(`#accept-modal-${id}`).modal('attach events', `#event-accept-${id}`, 'show')
+            $(`#deny-modal-${id}`).modal('attach events', `#event-deny-${id}`, 'show')
+            if ($(`#accept-cancel-${id}`).length) $(`#event-detail-${id}`).modal('attach events', `#accept-cancel-${id}`, 'show')
+            if ($(`#deny-cancel-${id}`).length) $(`#event-detail-${id}`).modal('attach events', `#deny-cancel-${id}`, 'show')
         }
-    }
+    });
 
     $(document).on('click', '#login-submit', () => {
         $('#login-form').submit();
@@ -41,6 +46,11 @@ $(document).ready(() => {
     });
     $(document).on('click', '#search-submit', () => {
         $('#search-form').submit();
+    });
+    $(document).on('click', '#filter-clear', () => {
+        $('#filter-form').form('clear');
+        $('#search-form').form('clear');
+        window.location = '/clear';
     });
     
     $(document).on('click', '#logout', () => {

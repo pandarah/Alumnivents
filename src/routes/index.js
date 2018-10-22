@@ -7,7 +7,7 @@ const Utils = require('../api/EventUtils');
 const constants = require('../api/constants');
 
 const router = express.Router();
-const events = GenerateData(30);
+const data = GenerateData(30);
 
 const libraries = {
     moment,
@@ -16,7 +16,7 @@ const libraries = {
 const formOptions = {
     categories: constants.categories,
     majors: constants.majors,
-    locations: Utils.compileLocations(events),
+    cities: Utils.compileLocations(data),
 };
 
 router.get('/', (req, res) => {
@@ -24,11 +24,14 @@ router.get('/', (req, res) => {
         req.session.loggedIn = false;
     };
 
+    const events = Utils.applyFilters(req.app.locals.filters, data);
+
     res.render('index', {
         name: site.name,
         loggedIn: req.session.loggedIn,
         printer: false,
         events: Utils.splitEvents(events),
+        filters: req.app.locals.filters,
         date: new Date(),
         formOptions,
         libraries,
@@ -52,53 +55,64 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/print/:eventID', (req, res) => {
-    console.log(req.params);
+    // console.log(req.params);
     
     res.render('print', {
         name: site.name,
         loggedIn: true,
         printer: true,
-        event: events[req.params.eventID],
+        event: data[req.params.eventID],
         date: new Date(),
         libraries,
     })
 });
 
 router.post('/create', (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     // Add event to event table
     res.redirect('/');
 });
 
 router.post('/checkin', (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     // Add check-in to check-in table
     // Add checkinID to event at eventID
     res.redirect('/');
 });
 
 router.post('/feedback', (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     // Add feedback to feedback table
     // Add feedbackID to event at eventID
     res.redirect('/');
 });
 
 router.get('/interested/:eventID', (req, res) => {
-    console.log(req.params);
+    // console.log(req.params);
     // Increment interested count of event at eventID
     res.redirect('/');
 });
 
 router.get('/accept/:eventID', (req, res) => {
-    console.log(req.params);
+    // console.log(req.params);
     // Remove pending flag on event at eventID
     res.redirect('/');
 });
 
 router.get('/deny/:eventID', (req, res) => {
-    console.log(req.params);
+    // console.log(req.params);
     // Add denied flag to event at eventID
+    res.redirect('/');
+});
+
+router.post('/filter', (req, res) => {
+    // console.log(req.body);
+    req.app.locals.filters = req.body
+    res.redirect('/');
+});
+
+router.get('/clear', (req, res) => {
+    req.app.locals.filters = {};
     res.redirect('/');
 });
 
