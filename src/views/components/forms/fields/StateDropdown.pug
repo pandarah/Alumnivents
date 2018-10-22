@@ -1,0 +1,8 @@
+div(class='two wide field')
+    div(class='ui compact search selection dropdown')
+        input(type='hidden' name='state')
+        div(class='dropdown icon')
+        div(class='default text') State
+        div(class='menu')
+            each state, idx in formOptions.states
+                div(class='item' data-value=`${state}`)= state

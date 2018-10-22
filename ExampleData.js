@@ -6,7 +6,7 @@
  *  - Host Table
  *  - Location Table
  *  - Attendee Table
- *  - Comment Table
+ *  - Comment/Feeback Table
  * 
  * Essentially we will store all of the events in a single table and the identifier will be the ID
  * The hosts will have its own table and have a reference ID to the event ID
@@ -37,8 +37,9 @@ const event = {
 
 const host = {
     id: 0, // Number (auto incremented)
-    eventID: 0, // Number
+    eventID: 0, // Number (associated event)
     name: 'Grant Smith', // String
+    email: 'gsmith@scu.edu', // String
     major: 'Child Studies', // String
     graduation: 2000, // Number
     created: 1539954540, // Epoch Time Stamp

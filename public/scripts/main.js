@@ -13,7 +13,6 @@ $(document).ready(() => {
         const id = $(this).attr('id').slice(6);
         $(`#event-detail-${id}`).modal('attach events', `#event-button-${id}`, 'show');
         if (!loggedIn) {
-            console.log($(this).parent().attr('id') === 'past-events')
             if ($(this).parent().attr('id') === 'past-events') {
                 $(`#feedback-modal-${id}`).modal('attach events', `#event-feedback-${id}`, 'show')
                 $(`#checkin-modal-${id}`).modal('attach events', `#event-checkin-${id}`, 'show')

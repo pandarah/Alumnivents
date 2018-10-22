@@ -17,6 +17,8 @@ const formOptions = {
     categories: constants.categories,
     majors: constants.majors,
     cities: Utils.compileLocations(data),
+    states: constants.states,
+    countries: constants.countries,
 };
 
 router.get('/', (req, res) => {
@@ -69,21 +71,22 @@ router.get('/print/:eventID', (req, res) => {
 
 router.post('/create', (req, res) => {
     // console.log(req.body);
-    // Add event to event table
+    // Add event to event table //INSERT INTO EVENTS (name, description, etc.)
+    //get event ID for event that was just inserted - RETURNING id INTO :val:
+    // Add host to host table  //INSERT INTO HOSTS (first name, last name, getEventID, etc.)
+    // Add location to location table
     res.redirect('/');
 });
 
 router.post('/checkin', (req, res) => {
     // console.log(req.body);
-    // Add check-in to check-in table
-    // Add checkinID to event at eventID
+    // Add attendee & event ID to attendees table
     res.redirect('/');
 });
 
 router.post('/feedback', (req, res) => {
     // console.log(req.body);
-    // Add feedback to feedback table
-    // Add feedbackID to event at eventID
+    // Add feedback & eventID to feedback table
     res.redirect('/');
 });
 

@@ -1,13 +1,17 @@
 form(class='ui form' id='create-form' method='post' action='/create')
     if !loggedIn
         h4(class='ui dividing header') Your Information
-        div(class='field')
-            label Name
-            div(class='two fields')
-                div(class='field')
-                    input(type='text' name='firstname' placeholder='First Name')
-                div(class='field')
-                    input(type='text' name='lastname' placeholder='Last Name')
+        div(class='two fields')
+            div(class='field')
+                label Name
+                div(class='two fields')
+                    div(class='field')
+                        input(type='text' name='firstname' placeholder='First Name')
+                    div(class='field')
+                        input(type='text' name='lastname' placeholder='Last Name')
+            div(class='field')
+                label Email
+                input(type='email' name='email' placeholder='Email')
         div(class='two fields')
             div(class='field')
                 label Graduation Year
@@ -19,17 +23,19 @@ form(class='ui form' id='create-form' method='post' action='/create')
         input(type='text' name='name' placeholder='Event Name')
     div(class='field')
             label Location
-            div(class='five fields')
-                div(class='field')
-                    input(type='text' name='address' placeholder='Address')
-                div(class='field')
-                    input(type='text' name='city' placeholder='City')
-                div(class='field')
-                    input(type='text' name='state' placeholder='State')
-                div(class='field')
-                    input(type='text' name='zipcode' placeholder='Zip Code')
-                div(class='field')
-                    input(type='text' name='country' placeholder='Country')
+            div(class='two fields')
+                div(class='thirteen wide field')
+                    input(type='text' name='address' placeholder='Street Address')
+                div(class='three wide field')
+                    input(type='text' name='address2' placeholder='Apt #, etc...')
+    div(class='field')
+        div(class='four fields')
+            div(class='six wide field')
+                input(type='text' name='city' placeholder='City')
+            include ./fields/StateDropdown
+            div(class='three wide field')
+                input(type='text' name='zipcode' placeholder='Zip Code')
+            include ./fields/CountryDropdown
     div(class='two fields')
         div(class='field')
             label Time and Date

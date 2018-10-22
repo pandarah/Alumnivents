@@ -28,8 +28,9 @@ module.exports = count => {
             name: faker.lorem.sentence(),
             host: {
                 name: faker.name.firstName().concat(' ', faker.name.lastName()),
+                email: faker.internet.email(),
                 major: majorList[faker.random.number({ min: 0, max: majorList.length - 1 })],
-                graduation: faker.random.number({ min: 1900, max: moment().subtract(1, 'year').year() })
+                graduation: faker.random.number({ min: 1900, max: moment().subtract(1, 'year').year() }),
             },
             location: {
                 address: faker.address.streetAddress(),
