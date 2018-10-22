@@ -5,10 +5,12 @@ const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
+const http = require('http');
 
 const indexRouter = require('./src/routes/index');
 
 const app = express();
+app.set('port', process.env.PORT || 60818)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'src/views'));
@@ -54,5 +56,6 @@ app.use((err, req, res, next) => {
     res.status(err.status || 500);
     res.render('error');
 });
+
 
 module.exports = app;
