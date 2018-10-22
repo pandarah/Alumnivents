@@ -1,11 +1,14 @@
 div(class='ui segment event' id=`event-${event.id}`)
     div(class='ui two column stackable grid')
         div(class='ui thirteen wide column')
-            h4= event.name
-            p.
-                #[span(class='descriptor') Location]: #{event.location}
-            p.
-                #[span(class='descriptor') Date]: #{moment(event.date).format('dddd, MMMM Do YYYY [at] h:mm a')}
+            h3(class='ui header')= event.name
+            div(class='ui two column stackable grid')
+                div(class='column')
+                    h4(class='ui header') Date
+                        div(class='sub header')= `${libraries.moment(event.date).format('dddd, MMMM Do YYYY [at] h:mm a')}`
+                div(class='column')
+                    h4(class='ui header') Location
+                        div(class='sub header')= event.location
         div(class='ui three wide middle aligned column')
             button(class='ui button fluid orange' id=`event-button-${event.id}`) View
             include ../modals/Details

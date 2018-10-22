@@ -1,13 +1,12 @@
-block navigation
-    div(class='ui grid center aligned padded' id='heading')
-        div(class='four wide column')
-            if loggedIn
-                button(class='ui button inverted' id='logout') Log Out
-            else
-                button(class='ui button inverted' id='login') Log In
-        div(class='eight wide column')
-            h1= name
-        div(class='four wide column')
-            button(class='ui button inverted' id='create') Create Event
-    include modals/Login
-    include modals/Create
+div(class='ui grid center aligned padded' id='heading')
+    div(class='four wide column')
+        if loggedIn
+            button(class='ui button inverted' id='logout') Log Out
+        else
+            button(class='ui button inverted' id='login') Log In
+    div(class='eight wide column')
+        h1= name
+    div(class='four wide column')
+        button(class='ui button inverted' id='create') Create Event
+include modals/Login
+include modals/Create

@@ -1,4 +1,5 @@
-form(class='ui form' id='login-form')
+form(class='ui form' id=`feedback-form-${event.id}` method='post' action='/feedback')
+    input(type='hidden' name='event' value=`${event.id}`)
     div(class='field')
         label Name
         div(class='two fields')
@@ -9,6 +10,7 @@ form(class='ui form' id='login-form')
     div(class='field')
         label Event Rating
         div(class='ui huge star rating event-rating' id=`event-rating-${event.id}`)
+        input(type='hidden' name='rating' id=`event-rating-input-${event.id}` value='0')
     div(class='field')
         label Comment
-        textarea(rows='4')
+        textarea(rows='4' name='comment')

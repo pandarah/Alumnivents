@@ -9,15 +9,28 @@
   color: white;
 }
 
-#sidebar {
-    background-color: rgb(145, 5, 44);
-    height: 100vh;
-    margin-top: calc(-2rem - 64px);
-    z-index: -1;
+#printer {
+    padding: 2em;
 }
 
 .button.confirm {
     background-color: #B30738;
+    color: white;
+}
+.button.confirm:hover {
+    background-color: #820529;
+    color: white;
+}
+
+.label.confirm {
+    border-color: #B30738 !important;
+    color: white;
+}
+.label.confirm:hover {
+    border-color: #820529 !important;
+    color: white;
+}
+.label.confirm:hover i{
     color: white;
 }
 

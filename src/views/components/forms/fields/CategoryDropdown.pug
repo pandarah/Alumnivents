@@ -1,0 +1,9 @@
+div(class='field')
+    label Category
+    div(class='ui search selection dropdown')
+        input(type='hidden' name='category')
+        div(class='dropdown icon')
+        div(class='default text') Category
+        div(class='menu')
+            each category, idx in formOptions.categories
+                div(class='item' data-value=`${category}`)= category

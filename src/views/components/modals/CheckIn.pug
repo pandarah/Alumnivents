@@ -3,5 +3,5 @@ div(class='ui modal' id=`checkin-modal-${event.id}`)
     div(class='content')
         include ../forms/CheckIn
     div(class='actions')
-        div(class='ui button cancel') Cancel
+        div(class='ui button cancel' id=`checkin-cancel-${event.id}`) Cancel
         div(class='ui button confirm' id=`checkin-submit-${event.id}`) Check In

@@ -1,14 +1,25 @@
 div(class='ui modal details' id=`event-detail-${event.id}`)
     div(class='header')= event.name
-        if loggedIn
-            div(class='ui button right floated confirm' id=`event-print-${event.id}`) Print Report
+        if loggedIn && event.date < date && event.approved
+            a(class='ui confirm right corner label' id=`event-print-top-${event.id}` href=`/print/${event.id}` target='_blank')
+                i(class='print icon')
     div(class='content')
         include ../events/EventDetails
     div(class='actions')
-        if loggedIn
-            div(class='ui button confirm' id=`event-checkin-${event.id}`) Print Report
-        else
+        if !event.approved
+            div(class='ui button labeled icon red' id=`event-deny-${event.id}`) Deny
+                i(class='close icon')
+            div(class='ui button right labeled icon green' id=`event-accept-${event.id}`) Accept
+                i(class='check icon')
+            include ./confirmation/Deny
+            include ./confirmation/Accept
+        else if loggedIn && event.date < date
+            a(class='ui button right labeled icon confirm' id=`event-print-bottom-${event.id}` href=`/print/${event.id}` target='_blank') Print Report
+                i(class='print icon')
+        else if event.date < date
             div(class='ui button confirm' id=`event-feedback-${event.id}`) Provide Feedback
             div(class='ui button confirm' id=`event-checkin-${event.id}`) Check In
             include Feedback
             include CheckIn
+        else
+            a(class='ui button confirm' id=`event-interested-${event.id}` href=`/interested/${event.id}`) I'm Interested

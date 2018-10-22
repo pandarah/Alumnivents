@@ -1,4 +1,5 @@
-form(class='ui form' id='login-form')
+form(class='ui form' id=`checkin-form-${event.id}` method='post' action='/checkin')
+    input(type='hidden' name='event' value=`${event.id}`)
     div(class='field')
         label Name
         div(class='two fields')
@@ -9,7 +10,5 @@ form(class='ui form' id='login-form')
     div(class='two fields')
         div(class='field')
             label Graduation Year
-            input(type='text' name='gradyear' placeholder='Graduation Year')
-        div(class='field')
-            label Major
-            input(type='text' name='major' placeholder='Major')
+            input(type='text' name='graduation' placeholder='Graduation Year')
+        include ./fields/MajorDropdown

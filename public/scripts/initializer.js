@@ -1,23 +1,54 @@
-$(document).ready(function() {
+$(document).ready(() => {
+    const eventCount = $('.event').length;
+    const loggedIn = $('#log').html() === 'true' ? true : false;
+    
     $('.ui.accordion').accordion();
+    $('.ui.dropdown').dropdown();
     $('.ui.modal').modal({
         allowMultiple: false,
     });
+
+    // Event Ratings 
     $('.ui.rating').rating({
         maxRating: 5,
         interactive: false,
     });
-    $('.ui.rating.event-rating').rating({
-        maxRating: 5,
-    });
+
+    // Feedback Ratings
+    for (let i = 0; i < eventCount; i++) {
+        $(`#event-rating-${i}`).rating({
+            maxRating: 5,
+            onRate: value => {
+                $(`#event-rating-input-${i}`).val(value);
+            },
+        });
+    };
+
+    // Forms and Form Validation
     $('#login-form').form({
         fields: {
             password: 'empty',
         },
     });
     $('#create-form').form({
-        fields: eventFields,
+        fields: createFields(loggedIn),
     });
+
+    for (let i = 0; i < eventCount; i++) {
+        $(`#checkin-form-${i}`).form({
+            fields: userFields,
+        });
+        $(`#feedback-form-${i}`).form({
+            fields: {
+                firstname: 'empty',
+                lastname: 'empty',
+                rating: ['integer'],
+                comment: 'empty',
+            },
+        });
+    };
+
+    // Date Time Picker Intialization
     $('#dateTimeSelector').flatpickr({
         enableTime: true,
         minDate: 'today',
@@ -31,9 +62,9 @@ $(document).ready(function() {
 });
 
 const userFields = {
-    firstName: 'empty',
-    lastName: 'empty',
-    graduation: ['regExp[\d{4}]', 'empty'],
+    firstname: 'empty',
+    lastname: 'empty',
+    graduation: ['exactLength[4]', 'integer', 'empty'],
     major: 'empty',
 };
 
@@ -43,4 +74,21 @@ const eventFields = {
     date: 'empty',
     endTime: 'empty',
     description: 'empty',
+    category: 'empty',
+};
+
+/**
+ * @function createFields
+ * @summary Builds a form validation object for the create form
+ * 
+ * @param {Boolean} loggedIn - whether the user is logged in
+ * 
+ * @returns {Object} form validation object
+ */
+const createFields = loggedIn => {
+    if (loggedIn) {
+        return eventFields;
+    } else {
+        return Object.assign({}, userFields, eventFields);
+    }
 }

@@ -1,0 +1,7 @@
+div(class='ui tiny modal' id=`accept-modal-${event.id}`)
+    div(class='header') Accept Event
+    div(class='content') Are you sure you want to accept this event?
+    div(class='actions')
+        div(class='ui button cancel' id=`accept-cancel-${event.id}`) Cancel
+        a(class='ui right labeled icon button confirm' id=`accept-submit-${event.id}` href=`/accept/${event.id}`) Yes
+            i(class='check icon')
