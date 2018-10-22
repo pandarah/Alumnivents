@@ -4,15 +4,20 @@ const moment = require('moment');
 const site = require('../SiteConstants');
 const GenerateData = require('../api/GenerateData');
 const Utils = require('../api/EventUtils');
-const formOptions = require('../api/constants');
+const constants = require('../api/constants');
 
 const router = express.Router();
+const events = GenerateData(30);
 
 const libraries = {
     moment,
 };
 
-const events = GenerateData(30);
+const formOptions = {
+    categories: constants.categories,
+    majors: constants.majors,
+    locations: Utils.compileLocations(events),
+};
 
 router.get('/', (req, res) => {
     if (!req.session.hasOwnProperty('loggedIn')) {

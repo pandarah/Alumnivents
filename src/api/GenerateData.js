@@ -31,7 +31,13 @@ module.exports = count => {
                 major: majorList[faker.random.number({ min: 0, max: majorList.length - 1 })],
                 graduation: faker.random.number({ min: 1900, max: moment().subtract(1, 'year').year() })
             },
-            location: faker.address.streetAddress(),
+            location: {
+                address: faker.address.streetAddress(),
+                city: faker.address.city(),
+                state: faker.address.stateAbbr(),
+                zipcode: faker.address.zipCode('#####'),
+                country: faker.address.country(),
+            },
             date,
             endTime: moment(date).add(faker.random.number({ min: 1, max: 23 }), 'hours'),
             description: faker.lorem.sentences(5),
@@ -57,4 +63,3 @@ module.exports = count => {
     };
     return events;
 };
-

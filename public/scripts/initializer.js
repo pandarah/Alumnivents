@@ -70,7 +70,10 @@ const userFields = {
 
 const eventFields = {
     name: 'empty',
-    location: 'empty',
+    address: 'empty',
+    city: 'empty',
+    zipcode: 'empty',
+    country: 'empty',
     date: 'empty',
     endTime: 'empty',
     description: 'empty',

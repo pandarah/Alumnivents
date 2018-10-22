@@ -8,7 +8,9 @@ div(class='ui segment event' id=`event-${event.id}`)
                         div(class='sub header')= `${libraries.moment(event.date).format('dddd, MMMM Do YYYY [at] h:mm a')}`
                 div(class='column')
                     h4(class='ui header') Location
-                        div(class='sub header')= event.location
+                        div(class='sub header')= `${event.location.address}`
+                        div(class='sub header')= `${event.location.city.concat(' ', event.location.state, ', ', event.location.zipcode)}`
+                        div(class='sub header')= `${event.location.country}`
         div(class='ui three wide middle aligned column')
             button(class='ui button fluid orange' id=`event-button-${event.id}`) View
             include ../modals/Details

@@ -20,6 +20,17 @@ const splitEvents = data => {
     };
 };
 
+const compileLocations = events => {
+    const temp = new Map();
+    const locations = [];
+    events.forEach((event, idx) => {
+        temp.set(idx, event.location.city);
+    });
+    temp.forEach((location, idx) => locations.push(location));
+    return locations;
+};
+
 module.exports = {
     splitEvents,
+    compileLocations,
 };
