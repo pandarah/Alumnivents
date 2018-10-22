@@ -57,14 +57,29 @@ $(document).ready(() => {
     // Date Time Picker Intialization
     $('#dateTimeSelector').flatpickr({
         enableTime: true,
+        altInput: true,
+        altFormat: 'F j, Y at h:i K',
         minDate: 'today',
-        dateFormat: 'F j, Y at h:i K',
+        dateFormat: 'U',
+        onChange: (selected, dateStr, instance) => {
+            $('#endTimeSelector').flatpickr({
+                enableTime: true,
+                noCalendar: true,
+                altInput: true,
+                altFormat: 'h:i K',
+                dateFormat: 'U',
+                minDate: dateStr,
+                maxDate: moment.unix(parseInt(dateStr)).add(16, 'h').i
+            });
+        },
     });
     $('#endTimeSelector').flatpickr({
         enableTime: true,
         noCalendar: true,
-        dateFormat: 'h:i K',
-    })
+        altInput: true,
+        altFormat: 'h:i K',
+        dateFormat: 'U',
+    });
 });
 
 const userFields = {
@@ -98,6 +113,6 @@ const createFields = loggedIn => {
     if (loggedIn) {
         return eventFields;
     } else {
-        return Object.assign({}, userFields, eventFields);
+        return Object.assign({}, userFields, eventFields, { email: ['email', 'empty'] });
     }
 }
