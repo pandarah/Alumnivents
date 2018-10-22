@@ -1,8 +1,8 @@
 const oracledb = require('oracledb');
 const config = {
-    user: '<your db user>',                // Update me
-    password: '<your db password>',        // Update me
-    connectString: 'localhost:1521/orcl'   // Update me
+    user: 'tshih',                // Update me
+    password: 'alumnivents',        // Update me
+    connectString: '//dbserver.engr.scu.edu/db11g'   // Update me
 };
 
 /**
