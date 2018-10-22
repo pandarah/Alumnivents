@@ -36,6 +36,12 @@ $(document).ready(() => {
     $(document).on('click', '#create-submit', () => {
         $('#create-form').submit();
     });
+    $(document).on('click', '#filter-submit', () => {
+        $('#filter-form').submit();
+    });
+    $(document).on('click', '#search-submit', () => {
+        $('#search-form').submit();
+    });
     
     $(document).on('click', '#logout', () => {
         window.location = '/logout';

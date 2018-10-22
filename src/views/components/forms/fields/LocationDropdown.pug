@@ -1,0 +1,9 @@
+div(class='field')
+    label Location
+    div(class='ui search selection dropdown')
+        input(type='hidden' name='location')
+        div(class='dropdown icon')
+        div(class='default text') Location
+        div(class='menu')
+            each location, idx in formOptions.locations
+                div(class='item' data-value=`${location}`)= location

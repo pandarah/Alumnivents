@@ -1,5 +1,7 @@
 div(class='ui grid center stackable aligned centered')
-    div(class='three wide column')
-    div(class='ten wide column')
+    div(class='four wide column')
+        div(class='ui segment')
+            include ./filters/Filter
+            include ./filters/Search
+    div(class='eleven wide column')
         include ./events/EventAccordion
-    div(class='three wide column')

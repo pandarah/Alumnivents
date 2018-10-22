@@ -1,0 +1,9 @@
+div(class='ui header') Filter Events
+form(class='ui form' id='filter-form' method='get' action='/filter')
+    div(class='ui vertical menu fluid')
+        div(class='item')
+            include ../forms/fields/CategoryDropdown
+        div(class='item')
+            include ../forms/fields/LocationDropdown
+    div(class='ui button labeled icon fluid confirm' id='filter-submit') Apply
+        i(class='list icon')
