@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const ip = fs.readFileSync("ip/ip.txt").toString().split('\n')[0]
 
-const host = 'http://' + ip + ':60818/';
+const host = 'http://' + ip + ':3000/';
 
 http.get(host, resp =>{
 	let data = ''
