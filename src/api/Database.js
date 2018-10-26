@@ -32,5 +32,7 @@ const getEvents = async () => {
 }
 
 module.exports = {
+	oracledb,
+	config,
     getEvents,
 };
