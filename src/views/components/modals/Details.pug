@@ -25,3 +25,8 @@ div(class='ui modal details' id=`event-detail-${event.id}`)
             include CheckIn
         else
             a(class='ui button confirm' id=`event-interested-${event.id}` href=`/interested/${event.id}`) I'm Interested
+        if loggedIn
+            div(class='ui button right labeled icon' id=`event-update-${event.id}`) Update
+                i(class='arrow circle up icon')
+            include ./Update
+            

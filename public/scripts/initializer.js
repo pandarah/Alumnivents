@@ -62,6 +62,8 @@ $(document).ready(() => {
         minDate: 'today',
         dateFormat: 'U',
         onChange: (selected, dateStr, instance) => {
+            console.log(selected);
+            console.log(dateStr);
             $('#endTimeSelector').flatpickr({
                 enableTime: true,
                 noCalendar: true,
