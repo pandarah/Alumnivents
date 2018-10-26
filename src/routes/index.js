@@ -3,7 +3,8 @@ const moment = require('moment');
 
 const site = require('../SiteConstants');
 const GenerateData = require('../api/GenerateData');
-const Utils = require('../api/EventUtils');
+const eventUtils = require('../api/EventUtils');
+const utils = require('../api/Utils');
 const constants = require('../api/constants');
 
 const router = express.Router();
@@ -11,12 +12,13 @@ const data = GenerateData(30);
 
 const libraries = {
     moment,
+    utils,
 };
 
 const formOptions = {
     categories: constants.categories,
     majors: constants.majors,
-    cities: Utils.compileLocations(data),
+    cities: eventUtils.compileLocations(data),
     states: constants.states,
     countries: constants.countries,
 };
@@ -26,13 +28,14 @@ router.get('/', (req, res) => {
         req.session.loggedIn = false;
     };
 
-    const events = Utils.applyFilters(req.app.locals.filters, data);
+    const events = eventUtils.applyFilters(req.app.locals.filters, data);
 
     res.render('index', {
         name: site.name,
         loggedIn: req.session.loggedIn,
         printer: false,
-        events: Utils.splitEvents(events),
+        data: events,
+        events: eventUtils.splitEvents(events),
         filters: req.app.locals.filters,
         date: new Date(),
         formOptions,
@@ -75,6 +78,7 @@ router.post('/create', (req, res) => {
     //get event ID for event that was just inserted - RETURNING id INTO :val:
     // Add host to host table  //INSERT INTO HOSTS (first name, last name, getEventID, etc.)
     // Add location to location table
+
     res.redirect('/');
 });
 
