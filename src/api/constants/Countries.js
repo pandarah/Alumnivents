@@ -1,4 +1,5 @@
 module.exports = [
+    'United States',
     'Andorra',
     'U.A.E',
     'Afghanistan',
@@ -227,7 +228,6 @@ module.exports = [
     'Ukraine',
     'Uganda',
     'Us Minor Islands',
-    'United States',
     'Uruguay',
     'Uzbekistan',
     'Vatican City',
