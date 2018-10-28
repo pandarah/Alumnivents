@@ -8,7 +8,7 @@ const Utils = require('../api/EventUtils');
 const constants = require('../api/constants');
 
 const router = express.Router();
-const data = GenerateData(30);
+const data = GenerateData(30);//populates the database with 30 random hosts and events
 
 var firstTime = true;
 var currAlumniIndex;
@@ -39,6 +39,7 @@ function openDB(){
 	return db;
 }
 
+
 function closeDB(db){
 	db.close((err) => {
 		if(err){
@@ -48,43 +49,53 @@ function closeDB(db){
 	});
 }
 
+function getEventCount(db){
+	db.get('SELECT count(*) as ct FROM Event',[],(err,row)=>{
+		if(err){
+			throw err;
+		}
+		currEventIndex = row['ct'];
+	});
+}
+
+function getAlumniCount(db){
+	db.get('SELECT count(*) as ct FROM Alumni',[],(err,row)=>{
+		if(err){
+			throw err;
+		}
+		currAlumniIndex = row['ct'];
+	});
+}
+
 router.get('/', (req, res) => {
     if (!req.session.hasOwnProperty('loggedIn')) {
         req.session.loggedIn = false;
     };
+	
 	//this if statement gets current value of the Index we should be using in event of server shutdown
 	//this method assumes that an event's id and a person's id can never change
 	if (firstTime){
 		let db = openDB();
-		db.get('SELECT count(*) as ct FROM Alumni',[],(err,row)=>{
-			if(err){
-				throw err;
-			}
-			currAlumniIndex = row['ct'];
-		});
-
-		db.get('SELECT count(*) as ct FROM Event',[],(err,row)=>{
-			if(err){
-				throw err;
-			}
-			currEventIndex = row['ct'];
-		});
+		getEventCount(db);
+		getAlumniCount(db);
 		
 		firstTime = !firstTime;
 		closeDB(db);
 	}
-		
-    const events = Utils.applyFilters(req.app.locals.filters, data);
-    res.render('index', {
-        name: site.name,
-        loggedIn: req.session.loggedIn,
-        printer: false,
-        events: Utils.splitEvents(events),
-        filters: req.app.locals.filters,
-        date: new Date(),
-        formOptions,
-        libraries,
-    });
+
+	const events = Utils.applyFilters(req.app.locals.filters, data);
+   	res.render('index', {
+	    name: site.name,
+	    loggedIn: req.session.loggedIn,
+	    printer: false,
+	    events: Utils.splitEvents(events),
+	    filters: req.app.locals.filters,
+	    date: new Date(),
+	    formOptions,
+	    libraries,
+	});
+    
+	
 });
 
 router.post('/login', (req, res) => {
@@ -120,90 +131,40 @@ router.post('/create', (req, res) => {
     console.log(req.body);
 	let db = openDB();
 	// Add event to event table //INSERT INTO EVENTS (name, description, etc.)
-	
+	let hostId = currAlumniIndex;
+	let eventId = currEventIndex;
+	let hostName = req.body.firstname + ' ' + req.body.lastname;
+
 	db.serialize(()=>{
-		let hostId = currAlumniIndex;
-		let eventId = -1;
-		let hostName = req.body.firstname + ' ' + req.body.lastname;
-		let sql = 'INSERT INTO Event VALUES (NULL,?,?,?,?,?,?,?,?)';
-		db.run(sql, [ req.body.name, req.body.date, req.body.endTime, req.body.description, req.body.category,0,0,(new Date).getTime()], function(err){
-			if(err){
-				return console.log(err.message);
-			}
-			eventId = this.lastID;
-			console.log('Event Inserted: '+ eventId);
-		}).get('SELECT * FROM Alumni WHERE name = ? AND major = ? AND graduation = ?',[hostName, req.body.major, req.body.graduation], (err,row) => {
-			if(err){
-				return console.error(err.message);
-			}
-			console.log('is this in order (1)');
-			//if row is not null, then there was someone in the table with the name, grad year, and major given
-			if(row){
-				hostId = row['id'];
-			}
-		}).run('INSERT INTO Alumni VALUES (?,?,?,?)', [hostId, hostName, req.body.major, req.body.graduation], function(err){// Add host to Alumni table
-			if(err){
-				return console.log(err.message);
-			}
-			currAlumniIndex++;//only want to increment alumniindex if a value was successfully added to alumni
-		}).run('INSERT INTO Host Values (?,?,?)', [hostId, eventId, req.body.email], function(err){//Add Host to Host table
-			if(err){
-				return console.log(err.message);
-			}
-			console.log('is this in order (2)');
-		}).run('INSERT INTO Location VALUES (?,?,?,?,?,?)', [eventId, req.body.address, req.body.city, req.body.state, req.body.zipcode, req.body.country], function(err){// Add location to location table
-			if(err){
-				return console.log(err.message);
-			}
-			console.log('is this in order (3)');
-		});
-/*
-		//First Check to see if the alumni setting up event is already in system
-		sql = 'SELECT * FROM Alumni WHERE name = ? AND major = ? AND graduation = ?';
-		db.get(sql,[hostName, req.body.major, req.body.graduation], (err,row) => {
-			if(err){
-				return console.error(err.message);
-			}
-			console.log('is this in order (1)');
-			//if row is not null, then there was someone in the table with the name, grad year, and major given
-			if(row){
-				hostId = row['id'];
-			}
-		});
-			//We need to insert this person into table we rely on primary key error to check for person already present in list;
-		sql = 'INSERT INTO Alumni VALUES (?,?,?,?)';
-		db.run(sql, [hostId, hostName, req.body.major, req.body.graduation], function(err){
-			if(err){
-				return console.log(err.message);
-			}
-			currAlumniIndex++;
-		}).run('INSERT INTO Host Values (?,?,?)', [hostId, eventId, req.body.email], function(err){
-			if(err){
-				return console.log(err.message);
-			}
-			console.log('is this in order (2)');
-		});
-
-		console.log("Outside db: " + eventId);
-
-		sql = 'INSERT INTO Location VALUES (?,?,?,?,?,?)'
-		db.run(sql, [eventId, req.body.address, req.body.city, req.body.state, req.body.zipcode, req.body.country], function(err){
-			if(err){
-				return console.log(err.message);
-			}
-			console.log('is this in order (3)');
-		});
-*/
+		db.run('INSERT INTO Event VALUES (?,?,?,?,?,?,?,?,?)', [eventId, req.body.name, req.body.date, req.body.endTime, req.body.description, req.body.category,0,0,(new Date).getTime()])
+		.run('INSERT INTO Alumni VALUES (?,?,?,?)', [hostId, hostName, req.body.major, req.body.graduation])
+		.run('INSERT INTO Host Values (?,?,?)', [hostId, eventId, req.body.email])
+		.run('INSERT INTO Location VALUES (?,?,?,?,?,?)', [eventId, req.body.address, req.body.city, req.body.state, req.body.zipcode, req.body.country]);
 	});
-
-    
+/*
+	//TODO: For the final design we need to
+		-Check to see if Alumni previously in system
+		-Find a way to allow for run-time analysis on value of eventId and hostId
+*/
+	currAlumniIndex++;
+	currEventIndex++;
 	closeDB(db);
     res.redirect('/');
 });
 //TODO: FOR DEMO
 router.post('/checkin', (req, res) => {
     //console.log(req.body);
+	//For demo, we assume that people checking in have never been in the system before
+	//Checking for previous entry into system requires fixing large asynchronous issue
     // Add attendee & event ID to attendees table
+	let hostName = req.body.firstname + ' ' + req.body.lastname;
+	let hostId = currAlumniIndex;
+	db.serialize(()=>{
+		db.run('INSERT INTO Alumni VALUES (?,?,?,?)', [hostId, hostname, req.body.major, req.body.graduation])
+		.run('INSERT INTO Attendee VALUES (?,?)', [hostId, req.body.event]);
+	});
+	
+	currAlumniIndex++;
     res.redirect('/');
 });
 
@@ -216,6 +177,7 @@ router.post('/feedback', (req, res) => {
 router.get('/interested/:eventID', (req, res) => {
     //console.log(req.params);
 	let db = openDB();
+
 
 /*	let sql = 'SELECT * FROM Event WHERE id = 1';
 	db.get(sql,[], (err,row) => {
@@ -257,13 +219,30 @@ router.get('/interested/:eventID', (req, res) => {
 router.get('/accept/:eventID', (req, res) => {
     // console.log(req.params);
     // Remove pending flag on event at eventID
+	let db = openDB();
+	let sql = 'UPDATE Event SET status = 1 WHERE id = ?';
+	db.run(sql,[req.params.eventID],function (err){
+		if(err){
+			return console.error(err.message);
+		}
+		console.log(this.changes);
+	});
     res.redirect('/');
 });
 
 //TODO: FOR DEMO
 router.get('/deny/:eventID', (req, res) => {
-    // console.log(req.params);
+    console.log(req.params.eventID);
     // Add denied flag to event at eventID
+	let db = openDB();
+	let sql = 'UPDATE Event SET status = 2 WHERE id = ?';
+	db.run(sql,[req.params.eventID],function (err){
+		if(err){
+			return console.error(err.message);
+		}
+		console.log(this.changes);
+	});
+	
     res.redirect('/');
 });
 
