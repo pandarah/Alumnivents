@@ -38,7 +38,7 @@ router.get('/', (req, res) => {
         const events = eventUtils.applyFilters(req.app.locals.filters, data);
 
         //Have the response render the pug file index (for ui)
-        res.render('index', {
+        res.render('Index', {
             name: site.name,
             loggedIn: req.session.loggedIn,
             printer: false,
