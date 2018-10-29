@@ -1,7 +1,10 @@
 const _ = require('lodash');
+const utils = require('./Utils')
+
+//Manipulating event objects (filtering, getting locations for dropdown, etc.)
 
 const splitEvents = data => {
-    const date = new Date();
+    const date = utils.getCurrentDate();
     const upcoming = [], past = [], pending = [];
     data.forEach(event => {
         if (!event.denied) {

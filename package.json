@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "nodemon bin/index.js --exec babel-node",
+    "dev": "nodemon server.js --exec babel-node",
     "build": "babel bin -d dist",
-    "serve": "node dist/index.js"
+    "serve": "node server.js"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -19,13 +19,7 @@
     "jquery": "^3.3.1",
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
-    "morgan": "^1.9.1",
-    "npm-install-all": "^1.1.21",
-    "oracledb": "^3.0.0",
-    "os": "^0.1.1",
-    "path": "^0.12.7",
-    "sqlite3": "^4.0.3",
-    "url": "^0.11.0"
+    "sqlite3": "^4.0.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

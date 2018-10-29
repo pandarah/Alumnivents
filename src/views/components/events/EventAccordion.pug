@@ -5,10 +5,13 @@ div(class='ui styled fluid accordion')
             Upcoming Events
     div(class='content'.concat(loggedIn ? '' : ' active'))
         div(class='ui segments' id='upcoming-events')
-            each event in events.upcoming
-                include EventSegment
-                
-
+            if events.upcoming.length
+                each event in events.upcoming
+                    include EventSegment
+            else
+                div(class='ui segment')
+                    div(class='ui header') There are no upcoming events.
+            
 div(class='ui styled fluid accordion')
     div(class='title')
         i(class='dropdown icon')
@@ -16,8 +19,12 @@ div(class='ui styled fluid accordion')
             Past Events
     div(class='content')
         div(class='ui raised segments' id='past-events')
-            each event in events.past
-                include EventSegment
+            if events.past.length
+                each event in events.past
+                    include EventSegment
+            else
+                div(class='ui segment')
+                    div(class='ui header') There are no past events.
 
 if loggedIn
     div(class='ui styled fluid accordion')
@@ -27,5 +34,9 @@ if loggedIn
                 Pending Events
         div(class='content active')
             div(class='ui raised segments' id='pending-events')
-                each event in events.pending
-                    include EventSegment
+                if events.pending.length
+                    each event in events.pending
+                        include EventSegment
+                else
+                    div(class='ui segment')
+                        div(class='ui header') There are no pending events.

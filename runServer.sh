@@ -8,7 +8,7 @@ PID="$(cat tmp/pid.txt)"
 kill $PID
 
 #start new server
-screen -d -m node bin/index.js
+screen -d -m node server.js
 
 #update ip
 node ip/getIP.js 

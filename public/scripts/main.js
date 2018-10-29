@@ -29,8 +29,10 @@ $(document).ready(() => {
         } else {
             $(`#accept-modal-${id}`).modal('attach events', `#event-accept-${id}`, 'show')
             $(`#deny-modal-${id}`).modal('attach events', `#event-deny-${id}`, 'show')
+            // $(`#update-modal-${id}`).modal('attach events', `#event-update-${id}`, 'show')
             if ($(`#accept-cancel-${id}`).length) $(`#event-detail-${id}`).modal('attach events', `#accept-cancel-${id}`, 'show')
             if ($(`#deny-cancel-${id}`).length) $(`#event-detail-${id}`).modal('attach events', `#deny-cancel-${id}`, 'show')
+            // $(`#event-detail-${id}`).modal('attach events', `#update-cancel-${id}`, 'show')
         }
     });
 

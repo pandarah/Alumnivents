@@ -9,9 +9,9 @@ div(class='ui four column container vertically divided grid')
                 div(class='sub header')= `${event.location.city.concat(' ', event.location.state, ', ', event.location.zipcode)}`
                 div(class='sub header')= `${event.location.country}`
             div(class='ui header') Date
-                div(class='sub header')= libraries.moment(event.date).format('dddd, MMMM Do YYYY')
+                div(class='sub header')= libraries.moment.unix(event.date).format('dddd, MMMM Do YYYY')
             div(class='ui header') Time
-                div(class='sub header')= `${libraries.moment(event.date).format('hh:mm a')} to ${libraries.moment(event.endTime).format('hh:mm a')}`
+                div(class='sub header')= `${libraries.moment.unix(event.date).format('hh:mm a')} to ${libraries.moment.unix(event.endTime).format('hh:mm a')}`
     div(class='ui four column row')
         div(class='column')
             div(class='ui header') Category
@@ -19,9 +19,13 @@ div(class='ui four column container vertically divided grid')
         div(class='column')
             div(class='ui header') Host
                 div(class='sub header')= event.host.name
-                if loggedIn && event.approved
+                if loggedIn && event.host.name !== 'Alumni Office' && event.approved
                     div(class='sub header')= event.host.major
                     div(class='sub header')= event.host.graduation
+                else if loggedIn && event.host.name === 'Alumni Office'
+                    div(class='sub header') alumni@scu.edu
+                else if !event.approved
+                    div(class='sub header')= event.host.email
         if !event.approved
             div(class='column')
                 div(class='ui header') Major
@@ -29,7 +33,7 @@ div(class='ui four column container vertically divided grid')
             div(class='column')
                 div(class='ui header') Graduation Year
                     div(class='sub header')= event.host.graduation
-        else if event.date < new Date() && event.approved
+        else if event.date < libraries.utils.getCurrentDate() && event.approved
             div(class='column')
                 div(class='ui header') Attendees
                     div(class='sub header')= event.attendees.length

@@ -5,7 +5,7 @@ div(class='ui segment event' id=`event-${event.id}`)
             div(class='ui two column stackable grid')
                 div(class='column')
                     h4(class='ui header') Date
-                        div(class='sub header')= `${libraries.moment(event.date).format('dddd, MMMM Do YYYY [at] h:mm a')}`
+                        div(class='sub header')= `${libraries.moment.unix(event.date).format('dddd, MMMM Do YYYY [at] h:mm a')}`
                 div(class='column')
                     h4(class='ui header') Location
                         div(class='sub header')= `${event.location.address}`
