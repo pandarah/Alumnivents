@@ -3,9 +3,9 @@ const fs = require('fs');
 
 const ip = fs.readFileSync("ip/ip.txt").toString().split('\n')[0]
 
-const host = 'http://' + ip + ':60818/';
+const host = 'http://' + ip + ':3000/';
 
-http.get(host, resp => { //'http://129.210.16.71:60818/', (resp) => {
+http.get(host, resp =>{
 	let data = ''
 
 	resp.on('data', chunk => {

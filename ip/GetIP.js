@@ -13,7 +13,7 @@ var fs = require('fs')
 var os = require('os');
 var ifaces = os.networkInterfaces();
 
-fs.writeFile("ip.txt", "", (err, data) => {
+fs.writeFile("ip/ip.txt", "", (err, data) => {
 	if(err) console.log("error")
 })
 
@@ -29,7 +29,7 @@ Object.keys(ifaces).forEach(function (ifname) {
 		if (alias >= 1) {
 			// this single interface has multiple ipv4 addresses
 			//console.log(ifname + ':' + alias, iface.address);
-			fs.appendFile("ip.txt", iface.address + '\n', (err, data) => {
+			fs.appendFile("ip/ip.txt", iface.address + '\n', (err, data) => {
 				if(err) console.log("error")
 			})
 			//process.exit(0)
@@ -37,7 +37,7 @@ Object.keys(ifaces).forEach(function (ifname) {
 		} else {
 			// this interface has only one ipv4 adress
 			//console.log(ifname, iface.address);
-			fs.appendFile("ip.txt", iface.address + '\n', (err, data) => {
+			fs.appendFile("ip/ip.txt", iface.address + '\n', (err, data) => {
 				if(err) console.log("error")
 			})
 			//process.exit(0)
