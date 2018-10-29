@@ -1,5 +1,6 @@
 const express = require('express');
 const moment = require('moment');
+const sqlite3 = require('sqlite3');
 
 const site = require('../SiteConstants');
 const eventUtils = require('../api/EventUtils');
@@ -147,3 +148,4 @@ router.get('/clear', (req, res) => {
 });
 
 module.exports = router;
+

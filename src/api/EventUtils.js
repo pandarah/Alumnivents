@@ -26,6 +26,7 @@ const splitEvents = data => {
 };
 
 const compileLocations = events => {
+	
     const temp = new Map();
     const locations = [];
     events.forEach((event, idx) => {
@@ -33,6 +34,7 @@ const compileLocations = events => {
     });
     temp.forEach((location, idx) => locations.push(location));
     return locations;
+	
 };
 
 const filterBySearch = (search, events) => {

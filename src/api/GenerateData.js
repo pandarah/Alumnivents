@@ -20,12 +20,13 @@ const allMajors = () => {
     return result;
 }
 
+
 const majorList = allMajors();
 
 module.exports = count => {
-    const events = []
+	let events = [];
     for (let i = 0; i < count; i++) {
-        const date = new Date(faker.random.number({ min: 1990, max: 2050 }).toString())
+        const date = new Date(faker.random.number({ min: 1990, max: 2050 }).toString());
         events.push({
             id: i,
             name: faker.lorem.sentence(),
@@ -64,6 +65,9 @@ module.exports = count => {
             approved: weightedBool(85),
             denied: weightedBool(5),
         });
+		
     };
-    return events;
+	return events
 };
+
+

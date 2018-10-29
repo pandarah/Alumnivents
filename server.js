@@ -12,6 +12,7 @@ const indexRouter = require('./src/routes/index');
 const database = require('./src/api/Database');
 
 const app = express();
+app.set('port', process.env.PORT || 60818)
 
 // Database Setup
 const db = new sqlite3.Database('./alumnivents.db');
