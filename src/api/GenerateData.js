@@ -1,3 +1,6 @@
+//Unused - replaced with real data
+//keeping for reference for structure of events, etc.
+
 const faker = require('faker');
 const moment = require('moment');
 

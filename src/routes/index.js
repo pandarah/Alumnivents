@@ -2,50 +2,61 @@ const express = require('express');
 const moment = require('moment');
 
 const site = require('../SiteConstants');
-const GenerateData = require('../api/GenerateData');
 const eventUtils = require('../api/EventUtils');
 const utils = require('../api/Utils');
 const constants = require('../api/constants');
+const actions = require('../api/Actions');
+
+// const GenerateData = require('../api/GenerateData');
+// const data = GenerateData(30);
 
 const router = express.Router();
-const data = GenerateData(30);
 
 const libraries = {
     moment,
     utils,
 };
 
-const formOptions = {
-    categories: constants.categories,
-    majors: constants.majors,
-    cities: eventUtils.compileLocations(data),
-    states: constants.states,
-    countries: constants.countries,
-};
-
 router.get('/', (req, res) => {
     if (!req.session.hasOwnProperty('loggedIn')) {
         req.session.loggedIn = false;
     };
+    
+    //Get the events with refreshEvents. Since it's an async function, you have to wait (then) for a response
+    actions.refreshEvents(req).then(() => {
+        const data = req.app.locals.events; //get data from global variable
 
-    const events = eventUtils.applyFilters(req.app.locals.filters, data);
+        const formOptions = {
+            categories: constants.categories,
+            majors: constants.majors,
+            cities: eventUtils.compileLocations(data),
+            states: constants.states,
+            countries: constants.countries,
+        };
 
-    res.render('index', {
-        name: site.name,
-        loggedIn: req.session.loggedIn,
-        printer: false,
-        data: events,
-        events: eventUtils.splitEvents(events),
-        filters: req.app.locals.filters,
-        date: new Date(),
-        formOptions,
-        libraries,
-    });
+        const events = eventUtils.applyFilters(req.app.locals.filters, data);
+
+        //Have the response render the pug file index (for ui)
+        res.render('index', {
+            name: site.name,
+            loggedIn: req.session.loggedIn,
+            printer: false,
+            data: events,
+            events: eventUtils.splitEvents(events),
+            filters: req.app.locals.filters,
+            date: utils.getCurrentDate(),
+            formOptions,
+            libraries,
+        });
+    }).catch(err => {
+        res.send(err);
+        console.error(err);
+    })
 });
 
 router.post('/login', (req, res) => {
     if (req.body.password === site.password) {
-        req.session.loggedIn = true
+        req.session.loggedIn = true;
         res.redirect('/');
     } else {
         res.redirect('/');
@@ -60,60 +71,72 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/print/:eventID', (req, res) => {
-    // console.log(req.params);
-    
+    const data = req.app.locals.events;
     res.render('print', {
         name: site.name,
         loggedIn: true,
         printer: true,
-        event: data[req.params.eventID],
-        date: new Date(),
+        event: data[req.params.eventID - 1],
+        date: utils.getCurrentDate(),
         libraries,
-    })
+    });
 });
 
 router.post('/create', (req, res) => {
-    // console.log(req.body);
-    // Add event to event table //INSERT INTO EVENTS (name, description, etc.)
-    //get event ID for event that was just inserted - RETURNING id INTO :val:
-    // Add host to host table  //INSERT INTO HOSTS (first name, last name, getEventID, etc.)
-    // Add location to location table
-
-    res.redirect('/');
+    actions.createEvent(req).then(() => {
+        res.redirect('/');
+    }).catch(err => {
+        res.send(err);
+        console.warn('Unable to add event to database', err)
+    });
 });
 
 router.post('/checkin', (req, res) => {
-    // console.log(req.body);
-    // Add attendee & event ID to attendees table
-    res.redirect('/');
+    actions.eventCheckIn(req).then(() => {
+        res.redirect('/');
+    }).catch(err => {
+        res.send(err);
+        console.warn('Unable to check into event', err)
+    });
 });
 
 router.post('/feedback', (req, res) => {
-    // console.log(req.body);
-    // Add feedback & eventID to feedback table
-    res.redirect('/');
+    actions.eventFeedback(req).then(() => {
+        res.redirect('/');
+    }).catch(err => {
+        res.send(err);
+        console.warn('Unable to provide feedback for event', err)
+    });
 });
 
 router.get('/interested/:eventID', (req, res) => {
-    // console.log(req.params);
-    // Increment interested count of event at eventID
-    res.redirect('/');
+    actions.interestedInEvent(req).then(() => {
+        res.redirect('/');
+    }).catch(err => {
+        res.send(err);
+        console.warn('Unable to show interest in event', err)
+    });
 });
 
 router.get('/accept/:eventID', (req, res) => {
-    // console.log(req.params);
-    // Remove pending flag on event at eventID
-    res.redirect('/');
+    actions.approveEvent(req).then(() => {
+        res.redirect('/');
+    }).catch(err => {
+        res.send(err);
+        console.warn('Unable to approve event', err)
+    });
 });
 
 router.get('/deny/:eventID', (req, res) => {
-    // console.log(req.params);
-    // Add denied flag to event at eventID
-    res.redirect('/');
+    actions.denyEvent(req).then(() => {
+        res.redirect('/');
+    }).catch(err => {
+        res.send(err);
+        console.warn('Unable to deny event', err)
+    });
 });
 
 router.post('/filter', (req, res) => {
-    // console.log(req.body);
     req.app.locals.filters = req.body
     res.redirect('/');
 });

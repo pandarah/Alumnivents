@@ -1,3 +1,5 @@
+//Initializing all the library components that are used in the ui
+
 $(document).ready(() => {
     const eventCount = $('.event').length;
     const loggedIn = $('#log').html() === 'true' ? true : false;
@@ -13,16 +15,16 @@ $(document).ready(() => {
         maxRating: 5,
         interactive: false,
     });
-
-    // Feedback Ratings
-    for (let i = 0; i < eventCount; i++) {
-        $(`#event-rating-${i}`).rating({
+    $('.event-rating').each(function () {
+        const id = $(this).attr('id').slice(13);
+        $(this).rating({
             maxRating: 5,
+            interactive: true,
             onRate: value => {
-                $(`#event-rating-input-${i}`).val(value);
+                $(`#event-rating-input-${id}`).val(value);
             },
-        });
-    };
+        })
+    })
 
     // Forms and Form Validation
     $('#login-form').form({

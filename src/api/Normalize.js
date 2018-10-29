@@ -1,60 +1,51 @@
+//converting the data that is retrieved from the database into the correct format for processing/ui. Stripping unnecessary data
+
 const host = data => {
-    return data.map(host => {
-        return {
-            name: host.name,
-            email: host.email,
-            major: host.hostMajor,
-            graduation: host.graduation
-        }
-    });
+    return {
+        name: data.name,
+        email: data.email,
+        major: data.major,
+        graduation: data.graduation
+    }
 };
 
 const attendee = data => {
-    return data.map(attendee => {
-        return {
-            name: attendee.name,
-            major: attendee.major,
-            graduation: attendee.graduation
-        };
-    });
+    return {
+        name: data.name,
+        major: data.major,
+        graduation: data.graduation
+    };
 };
 
 const location = data => {
-    return data.map(location => {
-        return {
-            address: location.address,
-            city: location.city,
-            state: location.state,
-            zipcode: location.zipcode,
-            country: location.country,
-        };
-    });
+    return {
+        address: data.address,
+        city: data.city,
+        state: data.state,
+        zipcode: data.zipcode,
+        country: data.country,
+    };
 };
 const comment = data => {
-    return data.map(comment => {
-        return {
-            name: comment.name,
-            rating: comment.feedback,
-            detail: comment.detail
-        }
-    });
+    return {
+        name: data.name,
+        rating: data.rating,
+        detail: data.detail
+    }
 };
 
 const event = data => {
-    return data.map(event => {
-        return {
-            eventID: event.id,
-            name: event.name,
-            date: event.date,
-            endTime: event.endTime,
-            description: event.description,
-            category: event.category,
-            interested: event.interested,
-            attendees: event.attendees,
-            approved: event.approved,
-            denied: event.denied
-        }
-    });
+    return {
+        id: data.id,
+        name: data.name,
+        date: data.date,
+        endTime: data.endTime,
+        description: data.description,
+        category: data.category,
+        interested: data.interested,
+        approved: data.approved ? true : false,
+        denied: data.denied ? true : false,
+    }
 }
 
 module.exports = {

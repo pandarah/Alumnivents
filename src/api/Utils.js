@@ -1,3 +1,7 @@
+//Helpful functions to simplify things
+
+const getCurrentDate = () => Math.round(new Date().getTime() / 1000);
+
 const concatName = (first, last) => first.concat(' ', last);
 const splitNames = name => {
     const names = name.split(' ');
@@ -17,6 +21,7 @@ const splitAddress = address => {
 };
 
 module.exports = {
+    getCurrentDate,
     concatName,
     splitNames,
     concatAddress,
