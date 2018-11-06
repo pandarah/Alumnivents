@@ -49,6 +49,7 @@ router.get('/', (req, res) => {
             formOptions,
             libraries,
         });
+	req.app.locals.filters = {};
     }).catch(err => {
         res.send(err);
         console.error(err);
