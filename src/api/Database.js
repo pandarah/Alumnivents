@@ -132,6 +132,47 @@ const createEvent = async (db, event, isLoggedIn) => {
     }
 };
 
+const updateEvent = async (db, event) => {
+    const stmt = 'UPDATE events SET name = $name, date = $date, endTime = $endTime, description = $description, category = $category WHERE id = $id';
+    const result = await db.runAsync(stmt, {
+        $id: event.id,
+        $name: event.name,
+        $date: event.date,
+        $endTime: event.endTime,
+        $description: event.description,
+        $category: event.category,
+    });
+    if (!result.hasOwnProperty('changes')) {
+        console.warn(result);
+    } else {
+        const locationStmt = 'UPDATE locations SET address = $address, city = $city, state = $state, zipcode = $zipcode, country = $country WHERE id = $id';
+        const locationResult = await db.runAsync(locationStmt, {
+            $id: event.id,
+            $address: utils.concatAddress(event.address1, event.address2),
+            $city: event.city,
+            $state: event.state,
+            $zipcode: event.zipcode,
+            $country: event.country,
+        });
+        if (!locationResult.hasOwnProperty('changes')) {
+            console.warn(locationResult);
+        }
+        if (event.hasOwnProperty('firstname')) {
+            const hostStmt = 'UPDATE hosts SET name = $name, email = $email, major = $major, graduation = $graduation WHERE id = $id';
+            const hostResult = await db.runAsync(hostStmt, {
+                $id: event.id,
+                $name: utils.concatName(event.firstname, event.lastname),
+                $email: event.email,
+                $major: event.major,
+                $graduation: event.graduation,
+            });
+            if (!hostResult.hasOwnProperty('changes')) {
+                console.warn(hostResult);
+            }
+        }
+    }
+}
+
 const eventCheckIn = async (db, attendee) => {
     const stmt = 'INSERT INTO attendees (eventID, name, major, graduation, created) VALUES ($eventID, $name, $major, $graduation, $created)';
     const result = await db.runAsync(stmt, {
@@ -198,6 +239,7 @@ module.exports = {
     getComments,
     getEvents,
     createEvent,
+    updateEvent,
     eventCheckIn,
     eventFeedback,
     interestedInEvent,

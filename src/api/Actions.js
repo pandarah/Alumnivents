@@ -20,6 +20,14 @@ const createEvent = async req => {
     }
 };
 
+const updateEvent = async req => {
+    try {
+        await database.updateEvent(req.app.locals.db, req.body)
+    } catch (err) {
+        console.warn('Error creating event', err);
+    }
+};
+
 const eventCheckIn = async req => {
     try {
         await database.eventCheckIn(req.app.locals.db, req.body);
@@ -63,6 +71,7 @@ const denyEvent = async req => {
 module.exports = {
     refreshEvents,
     createEvent,
+    updateEvent,
     eventCheckIn,
     eventFeedback,
     interestedInEvent,

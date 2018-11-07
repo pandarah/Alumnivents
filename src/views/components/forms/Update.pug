@@ -1,5 +1,5 @@
 form(class='ui form' id=`update-form-${event.id}` method='post' action='/update')
-    input(type='hidden' name='event' value=`${event.id}`)
+    input(type='hidden' name='id' value=`${event.id}`)
     if data[event.id - 1].host.name !== 'Alumni Office'
         h4(class='ui dividing header') Host Information
         div(class='two fields')

@@ -1,6 +1,5 @@
 const express = require('express');
 const moment = require('moment');
-const sqlite3 = require('sqlite3');
 
 const site = require('../SiteConstants');
 const eventUtils = require('../api/EventUtils');
@@ -89,6 +88,15 @@ router.post('/create', (req, res) => {
     }).catch(err => {
         res.send(err);
         console.warn('Unable to add event to database', err)
+    });
+});
+
+router.post('/update', (req, res) => {
+    actions.updateEvent(req).then(() => {
+        res.redirect('/');
+    }).catch(err => {
+        res.send(err);
+        console.warn('Unable to update event in database', err)
     });
 });
 
