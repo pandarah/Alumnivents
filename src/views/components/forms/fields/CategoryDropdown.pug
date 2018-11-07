@@ -1,7 +1,7 @@
 div(class='field')
     label Category
     div(class='ui search selection dropdown fluid compact')
-        input(type='hidden' name='category' value=`${filters.hasOwnProperty('category') && filters.category !== '' ? filters.category : null}`)
+        input(type='hidden' name='category' value=`${event ? data[event.id - 1].category : filters.hasOwnProperty('category') && filters.category !== '' ? filters.category : ''}`)
         div(class='dropdown icon')
         div(class='default text') Category
         div(class='menu')

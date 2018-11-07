@@ -1,7 +1,7 @@
 div(class='field')
     label Major
     div(class='ui fluid search selection dropdown')
-        input(type='hidden' name='major')
+        input(type='hidden' name='major' value=`${event ? data[event.id - 1].host.major : ''}`)
         div(class='dropdown icon')
         div(class='default text') Major
         div(class='menu')
