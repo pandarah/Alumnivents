@@ -1,0 +1,51 @@
+form(class='ui form' id=`update-form-${event.id}` method='post' action='/update')
+    input(type='hidden' name='event' value=`${event.id}`)
+    if data[event.id - 1].host.name !== 'Alumni Office'
+        h4(class='ui dividing header') Host Information
+        div(class='two fields')
+            div(class='field')
+                label Name
+                div(class='two fields')
+                    div(class='field')
+                        input(type='text' name='firstname' placeholder='First Name' value=`${libraries.utils.splitNames(data[event.id - 1].host.name).first}`)
+                    div(class='field')
+                        input(type='text' name='lastname' placeholder='Last Name' value=`${libraries.utils.splitNames(data[event.id - 1].host.name).last}`)
+            div(class='field')
+                label Email
+                input(type='email' name='email' placeholder='Email' value=`${data[event.id - 1].host.email}`)
+        div(class='two fields')
+            div(class='field')
+                label Graduation Year
+                input(type='text' name='graduation' placeholder='Graduation Year' value=`${data[event.id - 1].host.graduation}`)
+            include ./fields/MajorDropdown
+        h4(class='ui dividing header') Event Information
+    div(class='field')
+        label Event Name
+        input(type='text' name='name' placeholder='Event Name' value=`${data[event.id - 1].name}`)
+    div(class='field')
+            label Location
+            div(class='two fields')
+                div(class='thirteen wide field')
+                    input(type='text' name='address1' placeholder='Street Address' value=`${libraries.utils.splitAddress(data[event.id - 1].location.address).address}`)
+                div(class='three wide field')
+                    input(type='text' name='address2' placeholder='Apt #, etc...' value=`${libraries.utils.splitAddress(data[event.id - 1].location.address).address2}`)
+    div(class='field')
+        div(class='four fields')
+            div(class='six wide field')
+                input(type='text' name='city' placeholder='City' value=`${data[event.id - 1].location.city}`)
+            include ./fields/StateDropdown
+            div(class='three wide field')
+                input(type='text' name='zipcode' placeholder='Zip Code' value=`${data[event.id - 1].location.zipcode}`)
+            include ./fields/CountryDropdown
+    div(class='two fields')
+        div(class='field')
+            label Time and Date
+            input(type='text' name='date' readonly='' placeholder='Time and Date' id='dateTimeSelector' value=`${libraries.moment.unix(data[event.id - 1].date).format('MMMM D, YYYY [at] h:mm A')}`)
+        div(class='field')
+            label End Time
+            input(type='text' name='endTime' readonly='' placeholder='End Time' id='endTimeSelector' value=`${libraries.moment.unix(data[event.id - 1].endTime).format('h:mm A')}`)
+    div(class='field')
+        label Description
+        textarea(rows='3' name='description')= data[event.id - 1].description
+    div(class='three fields')
+        include ./fields/CategoryDropdown
