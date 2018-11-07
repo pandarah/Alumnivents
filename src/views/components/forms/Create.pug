@@ -1,5 +1,4 @@
 form(class='ui form' id='create-form' method='post' action='/create')
-    input(type='hidden' name='update' value=`${event ? 1 : 0}`)
     if !loggedIn
         h4(class='ui dividing header') Your Information
         div(class='two fields')
@@ -7,45 +6,45 @@ form(class='ui form' id='create-form' method='post' action='/create')
                 label Name
                 div(class='two fields')
                     div(class='field')
-                        input(type='text' name='firstname' placeholder='First Name' value=`${event ? libraries.utils.splitNames(data[event.id].host.name).first : ''}`)
+                        input(type='text' name='firstname' placeholder='First Name')
                     div(class='field')
-                        input(type='text' name='lastname' placeholder='Last Name' value=`${event ? libraries.utils.splitNames(data[event.id].host.name).last : ''}`)
+                        input(type='text' name='lastname' placeholder='Last Name')
             div(class='field')
                 label Email
-                input(type='email' name='email' placeholder='Email' value=`${event ? data[event.id].host.email : ''}`)
+                input(type='email' name='email' placeholder='Email')
         div(class='two fields')
             div(class='field')
                 label Graduation Year
-                input(type='text' name='graduation' placeholder='Graduation Year' value=`${event ? data[event.id].host.graduation : ''}`)
+                input(type='text' name='graduation' placeholder='Graduation Year')
             include ./fields/MajorDropdown
         h4(class='ui dividing header') Event Information
     div(class='field')
         label Event Name
-        input(type='text' name='name' placeholder='Event Name' value=`${event ? data[event.id].name : ''}`)
+        input(type='text' name='name' placeholder='Event Name')
     div(class='field')
             label Location
             div(class='two fields')
                 div(class='thirteen wide field')
-                    input(type='text' name='address1' placeholder='Street Address' value=`${event ? libraries.utils.splitAddress(data[event.id].location.address).address : ''}`)
+                    input(type='text' name='address1' placeholder='Street Address')
                 div(class='three wide field')
-                    input(type='text' name='address2' placeholder='Apt #, etc...' value=`${event ? libraries.utils.splitAddress(data[event.id].location.address).address2 : ''}`)
+                    input(type='text' name='address2' placeholder='Apt #, etc...')
     div(class='field')
         div(class='four fields')
             div(class='six wide field')
-                input(type='text' name='city' placeholder='City' value=`${event ? data[event.id].location.city : ''}`)
+                input(type='text' name='city' placeholder='City')
             include ./fields/StateDropdown
             div(class='three wide field')
-                input(type='text' name='zipcode' placeholder='Zip Code' value=`${event ? data[event.id].location.zipcode : ''}`)
+                input(type='text' name='zipcode' placeholder='Zip Code')
             include ./fields/CountryDropdown
     div(class='two fields')
         div(class='field')
             label Time and Date
-            input(type='text' name='date' readonly='' placeholder='Time and Date' id='dateTimeSelector' value=`${event ? libraries.moment(data[event.id].date).format('MMMM D, YYYY [at] h:mm A') : ''}`)
+            input(type='text' name='date' readonly='' placeholder='Time and Date' id='dateTimeSelector')
         div(class='field')
             label End Time
-            input(type='text' name='endTime' readonly='' placeholder='End Time' id='endTimeSelector' value=`${event ? libraries.moment(data[event.id].endTime).format('h:mm A') : ''}`)
+            input(type='text' name='endTime' readonly='' placeholder='End Time' id='endTimeSelector')
     div(class='field')
         label Description
-        textarea(rows='3' name='description' value=`${event ? data[event.id].description : ''}`)
+        textarea(rows='3' name='description')
     div(class='three fields')
         include ./fields/CategoryDropdown
