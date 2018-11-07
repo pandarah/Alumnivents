@@ -11,7 +11,7 @@ const splitNames = name => {
     };
 };
 
-const concatAddress = (address, address2) => address.concat(', ', address2);
+const concatAddress = (address, address2) => address2.length ? address.concat(', ', address2) : address;
 const splitAddress = address => {
     const parts = address.split(', ');
     return {
