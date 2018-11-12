@@ -45,7 +45,7 @@ const filterBySearch = (search, events) => {
 }
 
 const filterByKey = (filter, events, key) => {
-	if(filter == 'null') {
+	if(filter == '') {
 		return events
 	}
 	else {
