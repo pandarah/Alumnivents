@@ -44,8 +44,23 @@ const filterBySearch = (search, events) => {
     return _.filter(events, isMatch);
 }
 
-const filterByKey = (filter, events, key) => events.filter(event => event[key] === filter);
-const filterByLocation = (filter, events, key) => events.filter(event => event.location[key] === filter);
+const filterByKey = (filter, events, key) => {
+	if(filter == 'null') {
+		return events
+	}
+	else {
+		return events.filter(event => event[key] === filter);
+	}
+}
+
+const filterByLocation = (filter, events, key) => {
+	if(filter == 'null') {
+		return events
+	}
+	else {
+		return events.filter(event => event.location[key] === filter);
+	}
+}
 
 const applyFilters = (filters, events) => {
     const keys = Object.keys(filters);
@@ -54,7 +69,7 @@ const applyFilters = (filters, events) => {
     } else if (keys.includes('category') && keys.includes('city')) {
         const category = filterByKey(filters.category, events, 'category');
         const city = filterByLocation(filters.city, events, 'city');
-        return _.unionBy(category, city, 'id')
+        return _.intersectionBy(category, city, 'id');
     }
     return events; 
 }

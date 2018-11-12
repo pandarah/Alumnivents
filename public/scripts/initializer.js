@@ -64,8 +64,6 @@ $(document).ready(() => {
         minDate: 'today',
         dateFormat: 'U',
         onChange: (selected, dateStr, instance) => {
-            console.log(selected);
-            console.log(dateStr);
             $('#endTimeSelector').flatpickr({
                 enableTime: true,
                 noCalendar: true,
@@ -84,6 +82,28 @@ $(document).ready(() => {
         altFormat: 'h:i K',
         dateFormat: 'U',
     });
+
+    $('.update-date').each(function () {
+        const id = $(this).attr('id').slice(16);
+        $(this).flatpickr({
+            enableTime: true,
+            altInput: true,
+            altFormat: 'F j, Y at h:i K',
+            minDate: 'today',
+            dateFormat: 'U',
+            onChange: (selected, dateStr, instance) => {
+                $(`#endTimeSelector-${id}`).flatpickr({
+                    enableTime: true,
+                    noCalendar: true,
+                    altInput: true,
+                    altFormat: 'h:i K',
+                    dateFormat: 'U',
+                    minDate: dateStr,
+                    maxDate: moment.unix(parseInt(dateStr)).add(16, 'h').i
+                });
+            },
+        })
+    })
 });
 
 const userFields = {
