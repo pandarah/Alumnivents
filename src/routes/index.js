@@ -34,7 +34,11 @@ router.get('/', (req, res) => {
             countries: constants.countries,
         };
 
-        const events = eventUtils.applyFilters(req.app.locals.filters, data);
+        const events = {};
+        eventUtils.applyFilters(req.app.locals.filters, data)
+            .forEach(event => {
+                events[event.id] = event;
+            });
 
         //Have the response render the pug file index (for ui)
         res.render('Index', {
@@ -48,7 +52,9 @@ router.get('/', (req, res) => {
             formOptions,
             libraries,
         });
-	req.app.locals.filters = {};
+
+        // Reset filters after search
+	    req.app.locals.filters = {};
     }).catch(err => {
         res.send(err);
         console.error(err);

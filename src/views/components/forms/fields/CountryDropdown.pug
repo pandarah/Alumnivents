@@ -1,6 +1,6 @@
 div(class='five wide field')
     div(class='ui search selection dropdown')
-        input(type='hidden' name='country' value=`${event ? data[event.id - 1].location.country : ''}`)
+        input(type='hidden' name='country' value=`${event ? data[event.id].location.country : ''}`)
         div(class='dropdown icon')
         div(class='default text') Country
         div(class='menu')
