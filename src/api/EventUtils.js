@@ -3,10 +3,10 @@ const utils = require('./Utils')
 
 //Manipulating event objects (filtering, getting locations for dropdown, etc.)
 
-const splitEvents = data => {
+const splitEvents = events => {
     const date = utils.getCurrentDate();
     const upcoming = [], past = [], pending = [];
-    data.forEach(event => {
+    Object.values(events).forEach(event => {
         if (!event.denied) {
             if (!event.approved) {
                 pending.push(event);
@@ -28,7 +28,7 @@ const splitEvents = data => {
 const compileLocations = events => {
 
     const locations = new Set();
-    events.forEach((event, idx) => {
+    events.forEach(event => {
         locations.add(event.location.city);
     });
     return Array.from(locations);
@@ -45,7 +45,7 @@ const filterBySearch = (search, events) => {
 }
 
 const filterByKey = (filter, events, key) => {
-	if(filter == 'null') {
+	if(filter == '') {
 		return events
 	}
 	else {
@@ -71,6 +71,7 @@ const applyFilters = (filters, events) => {
         const city = filterByLocation(filters.city, events, 'city');
         return _.intersectionBy(category, city, 'id');
     }
+    
     return events; 
 }
 
