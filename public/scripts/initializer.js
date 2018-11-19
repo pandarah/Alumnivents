@@ -71,7 +71,7 @@ $(document).ready(() => {
                 altFormat: 'h:i K',
                 dateFormat: 'U',
                 minDate: dateStr,
-                maxDate: moment.unix(parseInt(dateStr)).add(16, 'h').i
+                maxDate: moment.unix(parseInt(dateStr)).add(1, 'd').i
             });
         },
     });
@@ -84,7 +84,6 @@ $(document).ready(() => {
     });
 
     $('.update-date').each(function () {
-        const id = $(this).attr('id').slice(16);
         $(this).flatpickr({
             enableTime: true,
             altInput: true,
@@ -92,18 +91,28 @@ $(document).ready(() => {
             minDate: 'today',
             dateFormat: 'U',
             onChange: (selected, dateStr, instance) => {
-                $(`#endTimeSelector-${id}`).flatpickr({
+                $(`#.update-endtime`).flatpickr({
                     enableTime: true,
                     noCalendar: true,
                     altInput: true,
                     altFormat: 'h:i K',
                     dateFormat: 'U',
                     minDate: dateStr,
-                    maxDate: moment.unix(parseInt(dateStr)).add(16, 'h').i
+                    maxDate: moment.unix(parseInt(dateStr)).add(1, 'd').i
                 });
             },
         })
-    })
+    });
+    $(`.update-endtime`).each(function () {
+        $(this).flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            altInput: true,
+            altFormat: 'h:i K',
+            dateFormat: 'U',
+        });
+    });
+
 });
 
 const userFields = {
