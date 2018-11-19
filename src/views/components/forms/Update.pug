@@ -40,10 +40,10 @@ form(class='ui form' id=`update-form-${event.id}` method='post' action='/update'
     div(class='two fields')
         div(class='field')
             label Time and Date
-            input(type='text' name='date' class='update-date' readonly='' placeholder='Time and Date' id=`dateTimeSelector-${event.id}` value=`${libraries.moment.unix(data[event.id].date).format('MMMM D, YYYY [at] h:mm A')}`)
+            input(type='text' name='date' class='update-date' readonly='' placeholder='Time and Date' id=`dateTimeSelector-${event.id}` value=`${data[event.id].date}`)
         div(class='field')
             label End Time
-            input(type='text' name='endTime' readonly='' class='update-endtime' placeholder='End Time' id=`endTimeSelector-${event.id}` value=`${libraries.moment.unix(data[event.id].endTime).format('h:mm A')}`)
+            input(type='text' name='endTime' readonly='' class='update-endtime' placeholder='End Time' id=`endTimeSelector-${event.id}` value=`${data[event.id].endTime}`)
     div(class='field')
         label Description
         textarea(rows='3' name='description')= data[event.id].description
