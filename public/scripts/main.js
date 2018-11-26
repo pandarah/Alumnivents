@@ -59,7 +59,11 @@ $(document).ready(() => {
         $('#create-form').submit();
     });
     $(document).on('click', '#filter-submit', () => {
-        $('#filter-form').submit();
+        const input = $('<input>')
+		.attr('type', 'hidden')
+		.attr('name', 'report')
+		.val('0');
+        $('#filter-form').append(input).submit();
     });
     $(document).on('click', '#report-submit', () => {
         const input = $('<input>')

@@ -343,7 +343,7 @@ router.get('/deny/:eventID', (req, res) => {
  */
 router.post('/filter', (req, res) => {
     req.app.locals.filters = req.body
-    if(req.body.hasOwnProperty('report')) {
+    if(req.body.hasOwnProperty('report') && req.body.report == 1) {
         res.redirect('/report');
     }
     else {
