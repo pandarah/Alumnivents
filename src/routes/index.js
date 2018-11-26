@@ -90,10 +90,6 @@ router.get('/print/:eventID', (req, res) => {
 });
 
 router.get('/report', (req, res) => {
-    if (!req.session.hasOwnProperty('loggedIn')) {
-        req.session.loggedIn = false;
-    };
-
     //Get the events with refreshEvents. Since it's an async function, you have to wait (then) for a response
     actions.refreshEvents(req).then(() => {
         const data = req.app.locals.events; //get data from global variable
@@ -101,27 +97,55 @@ router.get('/report', (req, res) => {
         const events = {};
         eventUtils.applyFilters(req.app.locals.filters, data)
             .forEach(event => {
+                let total = 0, count = 0;
+                event.comments.forEach(comment => {
+                    total += comment.rating;
+                    count++;
+                })
+                event.averageRating = count ? Math.round((total / count) * 10) / 10 : 0;
                 events[event.id] = event;
             });
 
+        const eventCounts = { upcoming: { official: 0, unofficial: 0 }, past: { official: 0, unofficial: 0 } };
+        const splitEvents = eventUtils.splitEvents(events);
+        splitEvents.upcoming.forEach(event => {
+            if (event.host.name === 'Alumni Office') {
+                eventCounts.upcoming.official++;
+            } else {
+                eventCounts.upcoming.unofficial++;
+            }
+        });
+        splitEvents.past.forEach(event => {
+            if (event.host.name === 'Alumni Office') {
+                eventCounts.past.official++;
+            } else {
+                eventCounts.past.unofficial++;
+            }
+        });
+
+        //Have the response render the pug file index (for ui)
         res.render('report', {
             name: site.name,
-            loggedIn: true,
-            printer: true,
+            loggedIn: req.session.loggedIn,
+            printer: false,
+            data: events,
             events: eventUtils.splitEvents(events),
+            eventCounts,
             filters: req.app.locals.filters,
             date: utils.getCurrentDate(),
             libraries,
         });
 
+        // Reset filters after search
         req.app.locals.filters = {};
     }).catch(err => {
         res.send(err);
         console.error(err);
-    })
+    });
 });
 
 router.post('/create', (req, res) => {
+    console.log(req.body);
     actions.createEvent(req).then(() => {
         res.redirect('/');
     }).catch(err => {
