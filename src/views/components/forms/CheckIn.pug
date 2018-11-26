@@ -1,3 +1,4 @@
+//- This class allows alumni to check into events by providing details about themself
 form(class='ui form' id=`checkin-form-${event.id}` method='post' action='/checkin')
     input(type='hidden' name='event' value=`${event.id}`)
     div(class='field')

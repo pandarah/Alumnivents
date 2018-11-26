@@ -1,3 +1,6 @@
+//- This class provides a detailed view of the events for when they are selected to be viewed
+//- by either an alumni or the Alumni Office. It also enables editing an event, as well as
+//- Checkin, provide feedback, approve an event
 div(class='ui modal details' id=`event-detail-${event.id}`)
     div(class='header')= event.name
         if loggedIn && event.date < date && event.approved

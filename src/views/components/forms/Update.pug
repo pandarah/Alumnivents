@@ -1,3 +1,4 @@
+//- This class enables the Alumni Office to edit an event's information
 form(class='ui form' id=`update-form-${event.id}` method='post' action='/update')
     input(type='hidden' name='id' value=`${event.id}`)
     if data[event.id].host.name !== 'Alumni Office'
