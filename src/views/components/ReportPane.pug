@@ -11,7 +11,7 @@ div(class='ui grid center stackable aligned centered padded')
             div(class='ui header')= `Report for events in ${filters.city}`
 
         if !eventCounts.past.official && !eventCounts.past.unofficial && !eventCounts.upcoming.official && !eventCounts.upcoming.unofficial
-            div(class='ui header') No events were found with this criteria.
+            div(class='ui header') No events were found with this criteria
         if eventCounts.past.official || eventCounts.past.unofficial
             div(class='ui header') Past Events
         if eventCounts.past.official
