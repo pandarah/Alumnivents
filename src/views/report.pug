@@ -1,0 +1,7 @@
+extends Layout
+
+block content
+    div(id='printer')
+        ul
+            each event in events.past
+                include ./components/PrintPane
