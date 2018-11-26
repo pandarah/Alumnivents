@@ -1,0 +1,135 @@
+div(class='ui grid center stackable aligned centered padded')
+    div(class='thirteen wide column')
+        if filters.category !== '' && filters.city !== 'null'
+            div(class='ui header')= `Report for ${filters.category} events in ${filters.city}`
+        else if filters.category !== ''
+            div(class='ui header')= `Report for ${filters.category} events`
+        else if filters.city !== 'null'
+            div(class='ui header')= `Report for events in ${filters.city}`
+
+        if eventCounts.past.official || eventCounts.past.unofficial
+            div(class='ui header') Past Events
+        if eventCounts.past.official
+            h4(class='ui header') Official
+            table(class='ui celled table')
+                thead
+                    th Name
+                    th Date
+                    th Location
+                    if filters.category === ''
+                        th Category
+                    th Attendees
+                    th Average Rating
+                tbody
+                    each event in events.past
+                        if event.host.name === 'Alumni Office'
+                            tr
+                                td(data-label='Name')= event.name
+                                td(data-label='Date')
+                                    div(class='sub header')= libraries.moment.unix(event.date).format('dddd, MMMM Do YYYY')
+                                    div(class='sub header')= `from ${libraries.moment.unix(event.date).format('hh:mm a')} to ${libraries.moment.unix(event.endTime).format('hh:mm a')}`
+                                td(data-label='Location')
+                                    div(class='sub header')= `${event.location.address}`
+                                    div(class='sub header')= `${event.location.city.concat(' ', event.location.state, ', ', event.location.zipcode)}`
+                                    div(class='sub header')= `${event.location.country}`
+                                if filters.category === ''
+                                    td(data-label='Category')= event.category
+                                td(data-label='Attendees')= event.attendees.length
+                                td(data-label='Rating')
+                                    div(class='ui star rating report-rating' data-rating=event.averageRating)
+                                
+        if eventCounts.past.unofficial
+            h4(class='ui header') Unofficial
+            table(class='ui celled table')
+                thead
+                    th Name
+                    th Date
+                    th Location
+                    th Host
+                    if filters.category === ''
+                        th Category
+                    th Attendees
+                    th Average Rating
+                tbody
+                    each event in events.past
+                        if event.host.name !== 'Alumni Office'
+                            tr
+                                td(data-label='Name')= event.name
+                                td(data-label='Date')
+                                    div(class='sub header')= libraries.moment.unix(event.date).format('dddd, MMMM Do YYYY')
+                                    div(class='sub header')= `from ${libraries.moment.unix(event.date).format('hh:mm a')} to ${libraries.moment.unix(event.endTime).format('hh:mm a')}`
+                                td(data-label='Location')
+                                    div(class='sub header')= `${event.location.address}`
+                                    div(class='sub header')= `${event.location.city.concat(' ', event.location.state, ', ', event.location.zipcode)}`
+                                    div(class='sub header')= `${event.location.country}`
+                                td(data-label='Host')
+                                    div(class='sub header')= event.host.name
+                                    div(class='sub header')= event.host.major
+                                    div(class='sub header')= event.host.graduation
+                                    div(class='sub header')= event.host.email
+                                if filters.category === ''
+                                    td(data-label='Category')= event.category
+                                td(data-label='Attendees')= event.attendees.length
+                                td(data-label='Rating')
+                                    div(class='ui star rating report-rating' data-rating=event.averageRating)
+
+        if eventCounts.upcoming.official || eventCounts.upcoming.unofficial
+            div(class='ui header') Upcoming Events
+
+        if eventCounts.upcoming.official
+            h4(class='ui header') Official
+            table(class='ui celled table')
+                thead
+                    th Name
+                    th Date
+                    th Location
+                    if filters.category === ''
+                        th Category
+                    th Interested
+                tbody
+                    each event in events.upcoming
+                        if event.host.name === 'Alumni Office'
+                            tr
+                                td(data-label='Name')= event.name
+                                td(data-label='Date')
+                                    div(class='sub header')= libraries.moment.unix(event.date).format('dddd, MMMM Do YYYY')
+                                    div(class='sub header')= `from ${libraries.moment.unix(event.date).format('hh:mm a')} to ${libraries.moment.unix(event.endTime).format('hh:mm a')}`
+                                td(data-label='Location')
+                                    div(class='sub header')= `${event.location.address}`
+                                    div(class='sub header')= `${event.location.city.concat(' ', event.location.state, ', ', event.location.zipcode)}`
+                                    div(class='sub header')= `${event.location.country}`
+                                if filters.category === ''
+                                    td(data-label='Category')= event.category
+                                td(data-label='Interested')= event.interested
+
+        if eventCounts.upcoming.unofficial
+            h4(class='ui header') Unofficial
+            table(class='ui celled table')
+                thead
+                    th Name
+                    th Date
+                    th Location
+                    th Host
+                    if filters.category === ''
+                        th Category
+                    th Interested
+                tbody
+                    each event in events.upcoming
+                        if event.host.name !== 'Alumni Office'
+                            tr
+                                td(data-label='Name')= event.name
+                                td(data-label='Date')
+                                    div(class='sub header')= libraries.moment.unix(event.date).format('dddd, MMMM Do YYYY')
+                                    div(class='sub header')= `from ${libraries.moment.unix(event.date).format('hh:mm a')} to ${libraries.moment.unix(event.endTime).format('hh:mm a')}`
+                                td(data-label='Location')
+                                    div(class='sub header')= `${event.location.address}`
+                                    div(class='sub header')= `${event.location.city.concat(' ', event.location.state, ', ', event.location.zipcode)}`
+                                    div(class='sub header')= `${event.location.country}`
+                                td(data-label='Host')
+                                    div(class='sub header')= event.host.name
+                                    div(class='sub header')= event.host.major
+                                    div(class='sub header')= event.host.graduation
+                                    div(class='sub header')= event.host.email
+                                if filters.category === ''
+                                    td(data-label='Category')= event.category
+                                td(data-label='Interested')= event.interested

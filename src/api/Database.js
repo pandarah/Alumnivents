@@ -102,7 +102,6 @@ const getEvents = async db => {
 };
 
 const createEvent = async (db, event, isLoggedIn) => {
-    const hostName = utils.concatName(event.firstname, event.lastname);
     
     const eventStmt = 'INSERT INTO events (name, date, endTime, description, category, interested, approved, denied, created) VALUES ($name, $date, $endTime, $description, $category, $interested, $approved, $denied, $created)';
     const hostStmt = 'INSERT INTO hosts (eventID, name, email, major, graduation, created) VALUES ($eventID, $name, $email, $major, $graduation, $created)';
@@ -111,6 +110,7 @@ const createEvent = async (db, event, isLoggedIn) => {
     
     var alumResult = true;
     if(!isLoggedIn){
+        const hostName = utils.concatName(event.firstname, event.lastname);
         const temp = await db.getAsync(alumStmt,{//checks if submitted host is an alumni through the list
             $name: hostName,
             $major: event.major,

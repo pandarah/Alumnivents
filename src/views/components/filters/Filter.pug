@@ -3,3 +3,5 @@ form(class='ui form' id='filter-form' method='post' action='/filter')
     include ../forms/fields/CategoryDropdown
     include ../forms/fields/CityDropdown
     div(class='ui button fluid confirm' id='filter-submit') Apply Filter
+    if loggedIn
+        div(class='ui button inverted brown fluid' style='margin-top: 0.75em;' id='report-submit') Create Report
