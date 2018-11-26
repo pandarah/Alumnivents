@@ -89,6 +89,38 @@ router.get('/print/:eventID', (req, res) => {
     });
 });
 
+router.get('/report', (req, res) => {
+    if (!req.session.hasOwnProperty('loggedIn')) {
+        req.session.loggedIn = false;
+    };
+
+    //Get the events with refreshEvents. Since it's an async function, you have to wait (then) for a response
+    actions.refreshEvents(req).then(() => {
+        const data = req.app.locals.events; //get data from global variable
+
+        const events = {};
+        eventUtils.applyFilters(req.app.locals.filters, data)
+            .forEach(event => {
+                events[event.id] = event;
+            });
+
+        res.render('report', {
+            name: site.name,
+            loggedIn: true,
+            printer: true,
+            events: eventUtils.splitEvents(events),
+            filters: req.app.locals.filters,
+            date: utils.getCurrentDate(),
+            libraries,
+        });
+
+        req.app.locals.filters = {};
+    }).catch(err => {
+        res.send(err);
+        console.error(err);
+    })
+});
+
 router.post('/create', (req, res) => {
     actions.createEvent(req).then(() => {
         res.redirect('/');
@@ -154,7 +186,12 @@ router.get('/deny/:eventID', (req, res) => {
 
 router.post('/filter', (req, res) => {
     req.app.locals.filters = req.body
-    res.redirect('/');
+    if(req.body.hasOwnProperty('report')) {
+        res.redirect('/report');
+    }
+    else {
+        res.redirect('/');
+    }
 });
 
 router.get('/clear', (req, res) => {
