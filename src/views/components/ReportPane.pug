@@ -15,7 +15,7 @@ div(class='ui grid center stackable aligned centered padded')
         if eventCounts.past.official || eventCounts.past.unofficial
             div(class='ui header') Past Events
         if eventCounts.past.official
-            h4(class='ui header') Official
+            h4(class='ui header') Alumni Office Events
             table(class='ui celled table')
                 thead
                     th Name
@@ -44,7 +44,7 @@ div(class='ui grid center stackable aligned centered padded')
                                     div(class='ui star rating report-rating' data-rating=event.averageRating)
                                 
         if eventCounts.past.unofficial
-            h4(class='ui header') Unofficial
+            h4(class='ui header') Alumni Hosted Events
             table(class='ui celled table')
                 thead
                     th Name
@@ -82,7 +82,7 @@ div(class='ui grid center stackable aligned centered padded')
             div(class='ui header') Upcoming Events
 
         if eventCounts.upcoming.official
-            h4(class='ui header') Official
+            h4(class='ui header') Alumni Office Events
             table(class='ui celled table')
                 thead
                     th Name
@@ -108,7 +108,7 @@ div(class='ui grid center stackable aligned centered padded')
                                 td(data-label='Interested')= event.interested
 
         if eventCounts.upcoming.unofficial
-            h4(class='ui header') Unofficial
+            h4(class='ui header') Alumni Hosted Events
             table(class='ui celled table')
                 thead
                     th Name
