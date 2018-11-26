@@ -50,12 +50,11 @@ $(document).ready(() => {
         $('#filter-form').submit();
     });
     $(document).on('click', '#report-submit', () => {
-        const input = $('<input>').attr('target', '_blank').attr('type', 'hidden').attr('name', 'report').val('1');
+        const input = $('<input>')
+            .attr('type', 'hidden')
+            .attr('name', 'report')
+            .val('1');
         $('#filter-form').append(input).submit();
-        $('#filter-form').form('clear');
-        $('#filter-form').form('clear');
-        //window.location = '/clear';
-        window.open('/clear', '_blank');
     });
     $(document).on('click', '#search-submit', () => {
         $('#search-form').submit();
