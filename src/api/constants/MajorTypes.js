@@ -1,3 +1,8 @@
+/**
+ * @file
+ * @exports
+ * @summary This file contains the possible choices for an alumnus' major
+ */
 module.exports = {
     'College of Arts and Sciences': {
         icon: 'flask',

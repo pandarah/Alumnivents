@@ -1,3 +1,8 @@
+/**
+ * @file
+ * @exports
+ * @summary This file contains the possible choices for the state an event is located in
+ */
 module.exports = [
     'AL',
     'AK',

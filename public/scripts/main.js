@@ -1,3 +1,16 @@
+/**
+ * @file
+ * @summary The general goal of this file is to attach certain actions to certain events.
+ *  
+ * @function ready
+ * @summary This function attaches certain events to certain actions. It goes through each modal to attach the events, and also goes through each
+ * individual event and attaches the appropriately IDed buttons to the event modal.
+ * @callback
+ *
+ * @param {} - This function does not have any parameters
+ *
+ * @returns {} - This function does not return anything
+ */
 $(document).ready(() => {
     
     const eventCount = $('.event').length;
@@ -8,7 +21,6 @@ $(document).ready(() => {
     }
     $('#create-modal').modal('attach events', '#create', 'show')
 
-    // for (let i = 0; i < eventCount; i++) {
     $('.event').each(function () {
         const id = $(this).attr('id').slice(6);
         $(`#event-detail-${id}`).modal('attach events', `#event-button-${id}`, 'show');

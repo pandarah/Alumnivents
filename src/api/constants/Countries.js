@@ -1,3 +1,8 @@
+/**
+ * @file
+ * @exports
+ * @summary This file contains the possible choices for the country an event is in
+ */
 module.exports = [
     'United States',
     'Andorra',
