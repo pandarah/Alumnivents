@@ -13,6 +13,14 @@ const createAsyncDB = db => {
             });
         });
     };
+    
+    db.getAsync = (sql,params) => {
+        return new Promise((resolve, reject) => {
+            db.get(sql, params, (err, row) => {
+                err ? reject(err) : resolve(row);
+            });
+        });
+    };
 
     db.runAsync = (sql, params) => {
         return new Promise((resolve, reject) => {
@@ -94,41 +102,57 @@ const getEvents = async db => {
 };
 
 const createEvent = async (db, event, isLoggedIn) => {
+    const hostName = utils.concatName(event.firstname, event.lastname);
+    
     const eventStmt = 'INSERT INTO events (name, date, endTime, description, category, interested, approved, denied, created) VALUES ($name, $date, $endTime, $description, $category, $interested, $approved, $denied, $created)';
     const hostStmt = 'INSERT INTO hosts (eventID, name, email, major, graduation, created) VALUES ($eventID, $name, $email, $major, $graduation, $created)';
     const locationStmt = 'INSERT INTO locations (eventID, address, city, state, zipcode, country, created) VALUES ($eventID, $address, $city, $state, $zipcode, $country, $created)';
-
-    const result = await db.runAsync(eventStmt, {
-        $name: event.name,
-        $date: event.date,
-        $endTime: event.endTime,
-        $description: event.description,
-        $category: event.category,
-        $interested: 0,
-        $approved: isLoggedIn ? 1 : 0,
-        $denied: 0,
-        $created: utils.getCurrentDate(),
-    });
-    if (result.hasOwnProperty('lastID')) {
-        await db.runAsync(hostStmt, {
-            $eventID: result.lastID,
-            $name: isLoggedIn ? 'Alumni Office' : utils.concatName(event.firstname, event.lastname),
-            $email: isLoggedIn ? 'alumni@scu.edu' : event.email,
-            $major: isLoggedIn ? 'N/A' : event.major,
-            $graduation: isLoggedIn ? 'N/A' : event.graduation,
+    const alumStmt = `SELECT * FROM alumni WHERE name = $name AND major = $major AND graduation = $graduation`;
+    
+    var alumResult = true;
+    if(!isLoggedIn){
+        const temp = await db.getAsync(alumStmt,{//checks if submitted host is an alumni through the list
+            $name: hostName,
+            $major: event.major,
+            $graduation:event.graduation,
+        });
+        alumResult = (temp != undefined);//should be true if the get run got something from the alumni table
+        
+    }
+    
+    if(alumResult){
+        const result = await db.runAsync(eventStmt, {
+            $name: event.name,
+            $date: event.date,
+            $endTime: event.endTime,
+            $description: event.description,
+            $category: event.category,
+            $interested: 0,
+            $approved: isLoggedIn ? 1 : 0,
+            $denied: 0,
             $created: utils.getCurrentDate(),
         });
-        await db.runAsync(locationStmt, {
-            $eventID: result.lastID,
-            $address: utils.concatAddress(event.address1, event.address2),
-            $city: event.city,
-            $state: event.state,
-            $zipcode: event.zipcode,
-            $country: event.country,
-            $created: utils.getCurrentDate(),
-        });
-    } else {
-        console.warn('Error inserting host and location');
+        if (result.hasOwnProperty('lastID')) {
+            await db.runAsync(hostStmt, {
+                $eventID: result.lastID,
+                $name: isLoggedIn ? 'Alumni Office' : utils.concatName(event.firstname, event.lastname),
+                $email: isLoggedIn ? 'alumni@scu.edu' : event.email,
+                $major: isLoggedIn ? 'N/A' : event.major,
+                $graduation: isLoggedIn ? 'N/A' : event.graduation,
+                $created: utils.getCurrentDate(),
+            });
+            await db.runAsync(locationStmt, {
+                $eventID: result.lastID,
+                $address: utils.concatAddress(event.address1, event.address2),
+                $city: event.city,
+                $state: event.state,
+                $zipcode: event.zipcode,
+                $country: event.country,
+                $created: utils.getCurrentDate(),
+            });
+        } else {
+            console.warn('Error inserting host and location');
+        }
     }
 };
 
@@ -174,30 +198,52 @@ const updateEvent = async (db, event) => {
 }
 
 const eventCheckIn = async (db, attendee) => {
+    const attendName = utils.concatName(attendee.firstname, attendee.lastname);
     const stmt = 'INSERT INTO attendees (eventID, name, major, graduation, created) VALUES ($eventID, $name, $major, $graduation, $created)';
-    const result = await db.runAsync(stmt, {
-        $eventID: attendee.event,
-        $name: utils.concatName(attendee.firstname, attendee.lastname),
+    const alumStmt = `SELECT * FROM alumni WHERE name = $name AND major = $major AND graduation = $graduation`;
+    
+    
+    const temp = await db.getAsync(alumStmt,{//checks if attendee is an alumni through the alumni list
+        $name: attendName,
         $major: attendee.major,
-        $graduation: attendee.graduation,
-        $created: utils.getCurrentDate(),
+        $graduation:attendee.graduation,
     });
-    if (!result.hasOwnProperty('lastID')) {
-        console.warn(result);
+    const alumResult = (temp != undefined);//should be true if the get run got something from the alumni table
+    
+    if(alumResult){//only run if the person attempting to check in is an alumni
+        const result = await db.runAsync(stmt, {
+            $eventID: attendee.event,
+            $name: attendName,
+            $major: attendee.major,
+            $graduation: attendee.graduation,
+            $created: utils.getCurrentDate(),
+        });
+        if (!result.hasOwnProperty('lastID')) {
+            console.warn(result);
+        }
     }
 }
 
 const eventFeedback = async (db, feedback) => {
+    const fbName = utils.concatName(feedback.firstname, feedback.lastname);
     const stmt = 'INSERT INTO comments (eventID, name, rating, detail, created) VALUES ($eventID, $name, $rating, $detail, $created)';
-    const result = await db.runAsync(stmt, {
-        $eventID: feedback.event,
-        $name: utils.concatName(feedback.firstname, feedback.lastname),
-        $rating: feedback.rating,
-        $detail: feedback.comment,
-        $created: utils.getCurrentDate(),
+    const chkStmt = 'SELECT * FROM attendees WHERE name = $name'
+    
+    const temp = await db.getAsync(chkStmt,{
+        $name: fbName,
     });
-    if (!result.hasOwnProperty('lastID')) {
-        console.warn(result);
+    const fbResult = (temp != undefined);
+    if(fbResult){
+        const result = await db.runAsync(stmt, {
+            $eventID: feedback.event,
+            $name: fbName,
+            $rating: feedback.rating,
+            $detail: feedback.comment,
+            $created: utils.getCurrentDate(),
+        });
+        if (!result.hasOwnProperty('lastID')) {
+            console.warn(result);
+        }
     }
 }
 
