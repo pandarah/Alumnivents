@@ -2,10 +2,10 @@ const normalize = require('./Normalize');
 const utils = require('./Utils');
 
 /**
- * @function createAsyncDB
- * @summary 
+ * @function createAsyncDB 
  * @see https://gist.github.com/yizhang82/26101c92faeea19568e48224b09e2d1c
- * 
+ * @see http://yizhang82.me/async-sqlite-as-promise
+ * @summary This function allows wrapping of callback based functions to run async requests
  * @param {sqlite3.db} db - the database to run requests on
  * 
  * @returns {Promise} the result of the db query
