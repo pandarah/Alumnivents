@@ -403,6 +403,20 @@ const denyEvent = async (db, eventID) => {
     }
 };
 
+/**
+  * @asynce
+  * @function getPassword
+  * @summary Gets the password hash from the database
+  * @param {sqlite3.db} db - The database which holds all information
+  *
+  * @returns {Promise} the result of the db query
+  */
+  
+const getPassword = async (db) => {
+    const stmt = 'SELECT * FROM password';
+    return await db.getAsync(stmt);
+};
+
 module.exports = {
     createAsyncDB,
     getHost,
@@ -417,4 +431,5 @@ module.exports = {
     interestedInEvent,
     approveEvent,
     denyEvent,
+    getPassword,
 };

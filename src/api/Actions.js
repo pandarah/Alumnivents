@@ -133,6 +133,19 @@ const denyEvent = async req => {
     }
 };
 
+/*
+ * @function doLogin
+ * @summary This function checks the hash of the user inputted password with  
+*/
+const doLogin = async (req,user) => {
+    try {
+        const result = await database.getPassword(req.app.locals.db);
+        req.session.loggedIn = (user.words[0] == result.p1) && (user.words[1] == result.p2) && (user.words[2] == result.p3) && (user.words[3] == result.p4) && (user.words[4] == result.p5) && (user.words[5] == result.p6) && (user.words[6] == result.p7) && (user.words[7] == result.p8);
+    } catch (err) {
+        console.warn('Error logging in', err)
+    }
+};
+
 module.exports = {
     refreshEvents,
     createEvent,
@@ -142,4 +155,5 @@ module.exports = {
     interestedInEvent,
     approveEvent,
     denyEvent,
+    doLogin,
 }

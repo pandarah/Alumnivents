@@ -4,6 +4,7 @@ DROP TABLE "attendees";
 DROP TABLE "hosts";
 DROP TABLE `events`;
 DROP TABLE "alumni";
+DROP TABLE "password";
 
 CREATE TABLE `events` (
 	`id`	INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -66,6 +67,16 @@ CREATE TABLE "alumni" (
     `graduation`    INTEGER
 );
 
+CREATE TABLE "password" (
+    `p1`    INTEGER PRIMARY KEY,
+    `p2`    INTEGER,
+    `p3`    INTEGER,
+    `p4`    INTEGER,
+    `p5`    INTEGER,
+    `p6`    INTEGER,
+    `p7`    INTEGER,
+    `p8`    INTEGER
+);
 INSERT INTO 'events' VALUES (1,'Law School Fundraising',1542160800,1542175200,'Join us for wine and food while we celebrate the new Law building and all the successful lawyers with it.','Fundraising',0,0,0,1540797431);
 INSERT INTO 'events' VALUES (2,'Art Appreciation',1535544010,1535558410,'Join us as we appreciate the intricacies of the medieval art era.','Theatre & Arts',10,1,0,1540797596);
 INSERT INTO 'events' VALUES (3,'2019 Reunion',1549580400,1549609200,'Come celebrate the years that have gone by and the years that are yet to come!','Reunion',0,1,0,1540797712);
@@ -94,4 +105,5 @@ INSERT INTO alumni VALUES (7,'Sarah Johnson','Computer Science and Engineering',
 INSERT INTO alumni VALUES (8,'Terry Shih','Computer Science and Engineering',2019);
 INSERT INTO alumni VALUES (9,'Ken Wakaba','Computer Science and Engineering',2018);
 
-
+INSERT INTO password VALUES (1556346920, 951743072, 540951952, -838610930, 375641119, 1783719700, 1331467734, -1105107296);
+ 

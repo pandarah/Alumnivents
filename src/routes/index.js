@@ -1,6 +1,7 @@
 //The general goal of the functions within this file is to correctly route actions.
 const express = require('express');
 const moment = require('moment');
+const SHA256 = require('crypto-js/sha256');
 
 const site = require('../SiteConstants');
 const eventUtils = require('../api/EventUtils');
@@ -83,12 +84,13 @@ router.get('/', (req, res) => {
  * @returns {} - This function does not return anything
  */
 router.post('/login', (req, res) => {
-    if (req.body.password === site.password) {
-        req.session.loggedIn = true;
+    console.log(SHA256("office"));
+    actions.doLogin(req,SHA256(req.body.password)).then(() => {
         res.redirect('/');
-    } else {
-        res.redirect('/');
-    }
+    }).catch(err => {
+        res.send(err);
+        console.warn('Unable to log in', err)
+    });
 });
 
 /**
@@ -343,7 +345,7 @@ router.get('/deny/:eventID', (req, res) => {
  */
 router.post('/filter', (req, res) => {
     req.app.locals.filters = req.body
-    if(req.body.hasOwnProperty('report') && req.body.report == 1) {
+    if(req.body.hasOwnProperty('report')) {
         res.redirect('/report');
     }
     else {
