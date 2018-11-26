@@ -1,3 +1,4 @@
+//The general goal of the functions within this file is to correctly route actions.
 const express = require('express');
 const moment = require('moment');
 
@@ -17,6 +18,16 @@ const libraries = {
     utils,
 };
 
+/**
+ * @function getIndex
+ * @summary Routes the get request of / to index
+ * @callback
+ * 
+ * @param {Object} req - This is the route request
+ * @param {Object} res - This is the route response
+ * 
+ * @returns {} - This function does not return anything
+ */
 router.get('/', (req, res) => {
     if (!req.session.hasOwnProperty('loggedIn')) {
         req.session.loggedIn = false;
@@ -61,6 +72,16 @@ router.get('/', (req, res) => {
     })
 });
 
+/**
+ * @function postLogin
+ * @summary Routes the get request of /login to login by setting the session loggedIn to true
+ * @callback
+ * 
+ * @param {Object} req - This is the route request
+ * @param {Object} res - This is the route response
+ * 
+ * @returns {} - This function does not return anything
+ */
 router.post('/login', (req, res) => {
     if (req.body.password === site.password) {
         req.session.loggedIn = true;
@@ -70,6 +91,16 @@ router.post('/login', (req, res) => {
     }
 });
 
+/**
+ * @function getLogout
+ * @summary Routes the get request of /logout to logout by setting the session loggedIn to false
+ * @callback
+ * 
+ * @param {Object} req - This is the route request
+ * @param {Object} res - This is the route response
+ * 
+ * @returns {} - This function does not return anything
+ */
 router.get('/logout', (req, res) => {
     if (req.session.loggedIn) {
         req.session.loggedIn = false;
@@ -77,6 +108,16 @@ router.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
+/**
+ * @function getPrint
+ * @summary Routes the get request of /print to login by rendering the print pane
+ * @callback
+ * 
+ * @param {Object} req - This is the route request
+ * @param {Object} res - This is the route response
+ * 
+ * @returns {} - This function does not return anything
+ */
 router.get('/print/:eventID', (req, res) => {
     const data = req.app.locals.events;
     res.render('print', {
@@ -89,6 +130,17 @@ router.get('/print/:eventID', (req, res) => {
     });
 });
 
+/**
+ * @function getReport
+ * @summary Routes the get request of /report to report which will filter the events needed and split them according to 
+ * upcoming and past events, official and unofficial events. Then renders the report pane
+ * @callback
+ * 
+ * @param {Object} req - This is the route request
+ * @param {Object} res - This is the route response
+ * 
+ * @returns {} - This function does not return anything
+ */
 router.get('/report', (req, res) => {
     //Get the events with refreshEvents. Since it's an async function, you have to wait (then) for a response
     actions.refreshEvents(req).then(() => {
@@ -144,8 +196,17 @@ router.get('/report', (req, res) => {
     });
 });
 
+/**
+ * @function postCreate
+ * @summary Routes the get request of /create to create an event using the request
+ * @callback
+ * 
+ * @param {Object} req - This is the route request
+ * @param {Object} res - This is the route response
+ * 
+ * @returns {} - This function does not return anything
+ */
 router.post('/create', (req, res) => {
-    console.log(req.body);
     actions.createEvent(req).then(() => {
         res.redirect('/');
     }).catch(err => {
@@ -154,6 +215,16 @@ router.post('/create', (req, res) => {
     });
 });
 
+/**
+ * @function postUpdate
+ * @summary Routes the get request of /update to update the page
+ * @callback
+ * 
+ * @param {Object} req - This is the route request
+ * @param {Object} res - This is the route response
+ * 
+ * @returns {} - This function does not return anything
+ */
 router.post('/update', (req, res) => {
     actions.updateEvent(req).then(() => {
         res.redirect('/');
@@ -163,6 +234,16 @@ router.post('/update', (req, res) => {
     });
 });
 
+/**
+ * @function postCheckIn
+ * @summary Routes the get request of /checkin to checkin the Alumnus using their information sent in the request
+ * @callback
+ * 
+ * @param {Object} req - This is the route request
+ * @param {Object} res - This is the route response
+ * 
+ * @returns {} - This function does not return anything
+ */
 router.post('/checkin', (req, res) => {
     actions.eventCheckIn(req).then(() => {
         res.redirect('/');
@@ -172,6 +253,17 @@ router.post('/checkin', (req, res) => {
     });
 });
 
+
+/**
+ * @function postFeedback
+ * @summary Routes the get request of /feedback to allow an Alumni to provide feedback
+ * @callback
+ * 
+ * @param {Object} req - This is the route request
+ * @param {Object} res - This is the route response
+ * 
+ * @returns {} - This function does not return anything
+ */
 router.post('/feedback', (req, res) => {
     actions.eventFeedback(req).then(() => {
         res.redirect('/');
@@ -181,6 +273,16 @@ router.post('/feedback', (req, res) => {
     });
 });
 
+/**
+ * @function getInterested
+ * @summary Routes the get request of /interested to show the interest in an event
+ * @callback
+ * 
+ * @param {Object} req - This is the route request
+ * @param {Object} res - This is the route response
+ * 
+ * @returns {} - This function does not return anything
+ */
 router.get('/interested/:eventID', (req, res) => {
     actions.interestedInEvent(req).then(() => {
         res.redirect('/');
@@ -190,6 +292,16 @@ router.get('/interested/:eventID', (req, res) => {
     });
 });
 
+/**
+ * @function getAccept
+ * @summary Routes the get request of /accept to allow the Alumni Office to approve events
+ * @callback
+ * 
+ * @param {Object} req - This is the route request
+ * @param {Object} res - This is the route response
+ * 
+ * @returns {} - This function does not return anything
+ */
 router.get('/accept/:eventID', (req, res) => {
     actions.approveEvent(req).then(() => {
         res.redirect('/');
@@ -199,6 +311,16 @@ router.get('/accept/:eventID', (req, res) => {
     });
 });
 
+/**
+ * @function getDeny
+ * @summary Routes the get request of /deny to allow the Alumni Office to deny an event
+ * @callback
+ * 
+ * @param {Object} req - This is the route request
+ * @param {Object} res - This is the route response
+ * 
+ * @returns {} - This function does not return anything
+ */
 router.get('/deny/:eventID', (req, res) => {
     actions.denyEvent(req).then(() => {
         res.redirect('/');
@@ -208,6 +330,17 @@ router.get('/deny/:eventID', (req, res) => {
     });
 });
 
+/**
+ * @function postFilter
+ * @summary Routes the get request of /filter to filter an event using the request body. If the body has been flagged with the 
+ * report flag, then it will proceed to getReport
+ * @callback
+ * 
+ * @param {Object} req - This is the route request
+ * @param {Object} res - This is the route response
+ * 
+ * @returns {} - This function does not return anything
+ */
 router.post('/filter', (req, res) => {
     req.app.locals.filters = req.body
     if(req.body.hasOwnProperty('report')) {
@@ -218,6 +351,16 @@ router.post('/filter', (req, res) => {
     }
 });
 
+/**
+ * @function getClear
+ * @summary Routes the get request of /clear to clear the filters that have been applied to the events
+ * @callback
+ * 
+ * @param {Object} req - This is the route request
+ * @param {Object} res - This is the route response
+ * 
+ * @returns {} - This function does not return anything
+ */
 router.get('/clear', (req, res) => {
     req.app.locals.filters = {};
     res.redirect('/');
